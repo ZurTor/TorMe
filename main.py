@@ -7,8 +7,12 @@ host = '127.0.0.1'
 port = 1337
 socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, "127.0.0.1", 9050, True)
 soc = socks.socksocket()
-soc.connect(("qnvzyabvnrx5twf7rpbbhklmlgvn2rdq3hkvpgnq5rik3gnvalybl6ad.onion", port))
+
 while True:
+    try:
+        soc.connect(("qnvzyabvnrx5twf7rpbbhklmlgvn2rdq3hkvpgnq5rik3gnvalybl6ad.onion", port))
+    except:
+        print("XD")
     login = list(map(str,input().split()))
     login_bytes = pickle.dumps(login)
     soc.sendall(login_bytes)
