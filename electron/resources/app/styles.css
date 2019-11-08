@@ -2,11 +2,12 @@ body{
 	background-color: #121212;
 	font-family: Verdana, System, Roman;
 	color: gray;
+	margin: 0;
 }
 
 form {
-  border: 3px solid #101010;
   background-color: #222222;
+  margin: 0;
 }
 
 /* Full-width inputs */
@@ -22,13 +23,32 @@ input[type=text], input[type=password] {
 
 input[type=message]{
 	width: 80%;
+	margin: 0;
 	padding: 14px 20px;
 	display: inline-block;
-	border: 2px solid #101010;
-	border-right: none;
+	border: 0;
 	box-sizing: border-box;
 	background-color: #404040;
 	float: left;
+}
+
+.chat {
+	background-color:#202020;
+	position: absolute;
+	width: 80%;
+	height: 100%;
+	right: 0;
+}
+
+.messenger {
+	width: 80%;
+	height: 100%;
+}
+
+.contacts {
+	width: 20%;
+	height: 100%;
+	position: absolute;
 }
 
 a{
@@ -36,9 +56,10 @@ a{
 }
 
 .send_div {
+	width: 80%;
 	position: absolute;
 	bottom: 0;
-	width: 100%;
+	right: 0;
 }
 /* Set a style for all buttons */
 button {
@@ -54,8 +75,6 @@ button {
 button.send {
 	margin: 0;
 	width: 20%;
-	border: 2px solid #101010;
-	border-left: none;
 	float: left;
 }
 
