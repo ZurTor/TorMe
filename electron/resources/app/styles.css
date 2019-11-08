@@ -1,24 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+  
 body{
-	background-color: #121212;
-	font-family: Verdana, System, Roman;
+	background-color: #333A41;
+	font-family: 'Roboto';
 	color: gray;
 	margin: 0;
 }
 
-form {
-  background-color: #222222;
-  margin: 0;
+img {
+	width: 100%;
 }
 
 /* Full-width inputs */
 input[type=text], input[type=password] {
-  width: 300px;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 2px solid #101010;
-  box-sizing: border-box;
-  background-color: #404040;
+	width: 300px;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 3px solid white;
+	box-sizing: border-box;
+	background-color: #FFFFFF;
 }
 
 input[type=message]{
@@ -28,8 +29,22 @@ input[type=message]{
 	display: inline-block;
 	border: 0;
 	box-sizing: border-box;
-	background-color: #404040;
+	background-color: #FFFFFF;
 	float: left;
+}
+
+.center{
+	text-align: center;
+}
+
+.right {
+	margin-left: 50%;
+	width: 50%;
+}
+
+.left {
+	float: left;
+	width: 50%;
 }
 
 .chat {
@@ -52,7 +67,20 @@ input[type=message]{
 }
 
 a{
-	color:lime;
+	color:#68B030;
+}
+
+.text {
+	background-color: #F8F9FA0;
+	border: 1px solid #F8F9FA0;
+	border-radius: 40px;
+}
+
+.form-popup {
+  display: none;
+  text-align: center;
+  z-index: 9;
+  transition-duration: 0.2s;
 }
 
 .send_div {
@@ -63,68 +91,40 @@ a{
 }
 /* Set a style for all buttons */
 button {
-  background-color: #7F2020;
-  color: black;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  width: 300px;
+	font-family: 'Roboto';
+	font-size: 20px;
+	background-color: #FFFFFF;
+	color: #333A41;
+	padding: 14px 20px;
+	margin: 10px 0;
+	cursor: pointer;
+	width: 300px;
+	border: 2px solid #FFFFFF;
+	border-radius: 40px;
+	transition-duration: 0.2s;
 }
 
-button.send {
-	margin: 0;
-	width: 20%;
-	float: left;
-}
+
 
 /* Add a hover effect for buttons */
 button:hover {
-  opacity: 0.8;
+	background-color: #7D4698;
+	border: 2px solid #7D4698;
+	color: #F8F9FA;
 }
 
-/* Add padding to containers */
-.container {
-  padding: 16px;
-  text-align: center
+button:focus {
+    outline: none;
+	background-color: #59316B;
+	border: 2px solid #59316B;
+	color: #F8F9FA;
 }
 
-/* The "Forgot password" text */
-span.psw {
-  float: right;
-  padding-top: 16px;
+input:focus {
+	 outline: none;
 }
 
-span.reg {
-	float: left;
-	padding-top: 16px;
+#register {
+	margin-top: 21px;
 }
 
-.registerbtn {
-  padding: 16px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  opacity: 0.9;
-}
-
-hr {
-  border: 1px solid #000000;
-  margin-bottom: 25px;
-}
-
-.center {
-  margin: auto;
-
-/* Change styles for span and cancel button on extra small screens */
-@media screen and (max-width: 300px) {
-  span.psw {
-    display: block;
-    float: none;
-  }
-  span.reg{
-	display: block;
-    float: none;
-  }
-}
