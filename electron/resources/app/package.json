@@ -20,6 +20,10 @@
     "electron": "^7.1.1"
   },
   "dependencies": {
-    "electron-titlebar-windows": "^3.0.0"
+    "electron-titlebar-windows": "^3.0.0",
+    "flask": "^0.2.10",
+    "python-shell": "^1.0.8",
+    "socket.io": "^2.3.0",
+    "socks": "^2.3.3"
   }
 }
