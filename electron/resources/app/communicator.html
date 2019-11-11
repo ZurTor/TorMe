@@ -5,24 +5,45 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="styles.css">
-	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
 
 <body>
 
-	<div class="contacts">
-	<h1>xD</h1>
+	<div class="contacts" id="contacts">
+	<input type="text" placeholder="search" class="text" id="searchbar">
 	</div>
 	
 	<div class="chat">
 	xD
 	</div>
 	
-	<form>
-		<div class="send_div">
-		<input type="message" placeholder="your message" name="msg">
-		<button type="submit" class="send">Send</button>
-		</div>
-	</form>
+	<div class="send_div">
+	<input type="text" placeholder="your message" class="text" id="message">
+		<button id="sendBtn">Send</button>
+	</div>
+	<script>
+	function addBtn(text) {   
+	var element = document.createElement("button");
+	element.value = text;
+	element.className = "contact";
+	element.onclick = function() { 
+		alert("blabla");
+	};
+	
+	var foo = document.getElementById("contacts");  
+	foo.appendChild(element);
+	}
+	
+	document.getElementById("sendBtn").onclick = function() {
+	addBtn("xD");
+	};
+  
+	$('button', ".contacts").on('click', function(){
+    $('button', ".contacts").not(this).removeClass('selected');
+	if ($(this).hasClass('selected')) { $(this).removeClass('selected')}
+	else { $(this).addClass('selected')}
+	});
+	</script>
 </body>
 </html>

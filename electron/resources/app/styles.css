@@ -11,7 +11,10 @@ img {
 	width: 100%;
 }
 
-/* Full-width inputs */
+a{
+	color:#68B030;
+}
+
 input[type=text], input[type=password] {
 	width: 300px;
 	padding: 12px 20px;
@@ -20,17 +23,6 @@ input[type=text], input[type=password] {
 	border: 3px solid white;
 	box-sizing: border-box;
 	background-color: #FFFFFF;
-}
-
-input[type=message]{
-	width: 80%;
-	margin: 0;
-	padding: 14px 20px;
-	display: inline-block;
-	border: 0;
-	box-sizing: border-box;
-	background-color: #FFFFFF;
-	float: left;
 }
 
 .center{
@@ -48,26 +40,32 @@ input[type=message]{
 }
 
 .chat {
-	background-color:#202020;
+	background-color:#333A41;
 	position: absolute;
 	width: 80%;
 	height: 100%;
 	right: 0;
 }
 
-.messenger {
-	width: 80%;
-	height: 100%;
-}
-
 .contacts {
 	width: 20%;
 	height: 100%;
 	position: absolute;
+	background-color: #2C333A;
 }
 
-a{
-	color:#68B030;
+.contact {
+	width: calc(100% - 10px);
+	margin: 5px;
+	padding: 15px 20px;
+	background-color:#333A41;
+	border: 2px solid #333A41;
+	border-radius: 10px;
+}
+
+.contact:hover {
+	background-color: #30373E;
+	border: 2px solid #30373E;
 }
 
 .text {
@@ -80,16 +78,18 @@ a{
   display: none;
   text-align: center;
   z-index: 9;
-  transition-duration: 0.2s;
+  transition-duration: 0.3s;
 }
 
 .send_div {
+	background-color: #FFFFFF;
 	width: 80%;
 	position: absolute;
 	bottom: 0;
 	right: 0;
 }
-/* Set a style for all buttons */
+
+
 button {
 	font-family: 'Roboto';
 	font-size: 20px;
@@ -101,30 +101,70 @@ button {
 	width: 300px;
 	border: 2px solid #FFFFFF;
 	border-radius: 40px;
-	transition-duration: 0.2s;
+	transition-duration: 0.3s;
 }
 
-
-
-/* Add a hover effect for buttons */
 button:hover {
 	background-color: #7D4698;
 	border: 2px solid #7D4698;
 	color: #F8F9FA;
 }
 
-button:focus {
-    outline: none;
+button.selected {
 	background-color: #59316B;
 	border: 2px solid #59316B;
 	color: #F8F9FA;
+}
+
+button:focus {
+	outline: none;
 }
 
 input:focus {
 	 outline: none;
 }
 
+#message {
+	background-color: #EAEBEC;
+	color: #F8F9FA0;
+	padding: 12px 20px;
+	width: calc(80% - 10px);
+}
+
+#sendBtn {
+	color: #F8F9FA0;
+	background-color: #EAEBEC;
+	padding: 14px 20px;
+	font-size: 12px;
+	cursor: pointer;
+	width: 20%;
+	border: none;
+
+}
+
+#sendBtn:hover {
+	background-color: #7D4698;
+	color: #F8F9FA;
+}
+
+#sendBtn:active {
+	background-color: #59316B;
+	color: #F8F9FA;
+}
+
+#sendBtn:focus {
+	outline: none;
+}
+
 #register {
 	margin-top: 21px;
 }
 
+#searchbar {
+	width: calc(100% - 10px);
+	margin: 5px;
+	padding: 6px 20px;
+	border-radius: 10px;
+	background-color: #272E35;
+	border: 2px solid #272E35;
+}
