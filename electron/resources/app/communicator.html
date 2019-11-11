@@ -9,41 +9,51 @@
 </head>
 
 <body>
-
-	<div class="contacts" id="contacts">
+	<div id="searchbox">
 	<input type="text" placeholder="search" class="text" id="searchbar">
+	<hr>
 	</div>
-	
+	<div class="contacts" id="contacts">
+	</div>
+
+	<div id="profile">
+		profpic
+	</div>
+	<div id="settings">
+		<a href="settings.html"><img id="hentaispinner" src="pics/hentaispinner.png"></a>
+	</div>
+
 	<div class="chat">
 	xD
 	</div>
-	
+
 	<div class="send_div">
 	<input type="text" placeholder="your message" class="text" id="message">
 		<button id="sendBtn">Send</button>
 	</div>
 	<script>
-	function addBtn(text) {   
+	function addBtn(text) {
 	var element = document.createElement("button");
 	element.value = text;
 	element.className = "contact";
-	element.onclick = function() { 
+	element.onclick = function() {
 		alert("blabla");
 	};
-	
-	var foo = document.getElementById("contacts");  
+
+	var foo = document.getElementById("contacts");
 	foo.appendChild(element);
 	}
-	
+
 	document.getElementById("sendBtn").onclick = function() {
 	addBtn("xD");
 	};
-  
+
 	$('button', ".contacts").on('click', function(){
     $('button', ".contacts").not(this).removeClass('selected');
 	if ($(this).hasClass('selected')) { $(this).removeClass('selected')}
 	else { $(this).addClass('selected')}
 	});
+
 	</script>
 </body>
 </html>

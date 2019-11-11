@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
-  
+
 body{
 	background-color: #333A41;
 	font-family: 'Roboto';
@@ -13,6 +13,12 @@ img {
 
 a{
 	color:#68B030;
+}
+
+hr {
+  border: 1px solid #272E35;
+  margin: 5px;
+	margin-top: 0;
 }
 
 input[type=text], input[type=password] {
@@ -42,6 +48,7 @@ input[type=text], input[type=password] {
 .chat {
 	background-color:#333A41;
 	position: absolute;
+	top: 0;
 	width: 80%;
 	height: 100%;
 	right: 0;
@@ -49,9 +56,15 @@ input[type=text], input[type=password] {
 
 .contacts {
 	width: 20%;
-	height: 100%;
+	height: calc(100% - 105px);
 	position: absolute;
+	top: 43px;
 	background-color: #2C333A;
+	overflow-y: scroll;
+}
+
+.contacts:hover::-webkit-scrollbar-thumb {
+	background: #272E35;
 }
 
 .contact {
@@ -88,7 +101,6 @@ input[type=text], input[type=password] {
 	bottom: 0;
 	right: 0;
 }
-
 
 button {
 	font-family: 'Roboto';
@@ -167,4 +179,53 @@ input:focus {
 	border-radius: 10px;
 	background-color: #272E35;
 	border: 2px solid #272E35;
+}
+
+#profile {
+	position: fixed;
+	bottom: 32px;
+	width: 100%;
+	height: 30px;
+	background-color: #272E35;
+}
+
+#settings {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	height: 31px;
+	background-color: #272E35;
+}
+
+#hentaispinner {
+	position: fixed;
+	left: calc(20% - 27px);
+	width: 23px;
+	bottom: 4px;
+}
+
+#back {
+	position: fixed;
+	right:4px;
+	top:4px;
+	width:20px;
+}
+
+#searchbox {
+	width: 20%;
+	background-color: #2C333A;
+}
+
+/* width */
+::-webkit-scrollbar {
+ width: 6px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+ background: #2C333A;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb {
+ background: #2C333A;
 }

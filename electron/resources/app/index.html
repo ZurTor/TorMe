@@ -9,7 +9,6 @@
 
 <body>
 
-
 <img src="TorMee.png">
 <div class="center">
 	<div class="left"><button onclick="openLog(); closeReg();">LOGIN</button></div>
@@ -35,7 +34,8 @@
 		</div>
 		<div>
 		<label id=emptyerr style="color:#b54747"><b>Username or password cannot be empty!</b></label>
-		<div>
+		<label id=specialerr style="color:#b54747"><b>Username or password special characters!</b></label>
+		</div>
 </div>
 
 <div class="form-popup" id="Reg">
@@ -75,6 +75,7 @@ function openLog() {
 	document.getElementById("Log").style.display = "block";
   }
 	document.getElementById("emptyerr").style.display = "none";
+	document.getElementById("specialerr").style.display = "none";
 }
 
 function closeLog() {
@@ -90,20 +91,40 @@ function openReg() {
   }
 }
 
+/*function isAlphaNumeric(str) {
+  var code, i, len;
+
+  for (i = 0, len = str.length; i < len; i++) {
+    code = str.charCodeAt(i);
+    if (!(code > 47 && code < 58) && // numeric (0-9)
+        !(code > 64 && code < 91) && // upper alpha (A-Z)
+        !(code > 96 && code < 123)) { // lower alpha (a-z)
+      return false;
+    }
+  }
+  return true;
+};*/
 
 function closeReg() {
   document.getElementById("Reg").style.display = "none";
 }
+
 function logme() {
+	var format = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
 	var logarg = document.getElementById("usernameLog").value;
 	var passarg = document.getElementById("passwordLog").value;
-
-	if(!(logarg=='') && !(passarg=='')){
-	logSend(logarg, passarg);
+	document.getElementById("specialerr").style.display = "none";
+	document.getElementById("emptyerr").style.display = "none";
+	if((logarg=='') || (passarg=='')){
+	document.getElementById("emptyerr").style.display = "block";
+	}
+	else if(format.test(logarg) || format.test(passarg))
+	{
+	document.getElementById("specialerr").style.display = "block";
 	}
 	else
 	{
-	document.getElementById("emptyerr").style.display = "block";
+	logSend(logarg, passarg);
 	}
 }
 </script>

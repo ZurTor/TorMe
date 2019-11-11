@@ -13,7 +13,7 @@ while True:
     try:
         soc.connect(("qnvzyabvnrx5twf7rpbbhklmlgvn2rdq3hkvpgnq5rik3gnvalybl6ad.onion", port))
     except:
-        print("XD")
+        print("maybe works")
     login = list(map(str, input().split(' ')))
     login_bytes = pickle.dumps(login)
     soc.sendall(login_bytes)
