@@ -22,6 +22,7 @@
   "dependencies": {
     "electron-titlebar-windows": "^3.0.0",
     "flask": "^0.2.10",
+    "proxysocket": "^1.2.0",
     "python-shell": "^1.0.8",
     "socket.io": "^2.3.0",
     "socks": "^2.3.3"
