@@ -62,10 +62,17 @@
 		</div>
 	</div>
 </div>
+
+><a href="communicator.html"><button></button></a>
 	
 <script>
 function openLog() {
-  document.getElementById("Log").style.display = "block";
+  if (document.getElementById("Log").style.display == "block") {
+	document.getElementById("Log").style.display = "none";
+  }
+  else {
+	document.getElementById("Log").style.display = "block";
+  }
 }
 
 function closeLog() {
@@ -73,7 +80,12 @@ function closeLog() {
 } 
 
 function openReg() {
-  document.getElementById("Reg").style.display = "block";
+   if (document.getElementById("Reg").style.display == "block") {
+	document.getElementById("Reg").style.display = "none";
+  }
+  else {
+	document.getElementById("Reg").style.display = "block";
+  }
 }
 
 function closeReg() {
@@ -81,7 +93,6 @@ function closeReg() {
 } 
 
 </script>
-<script src="/connect.js"></script>
 
 </body>
 </html>

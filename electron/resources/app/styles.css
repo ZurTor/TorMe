@@ -22,17 +22,6 @@ input[type=text], input[type=password] {
 	background-color: #FFFFFF;
 }
 
-input[type=message]{
-	width: 80%;
-	margin: 0;
-	padding: 14px 20px;
-	display: inline-block;
-	border: 0;
-	box-sizing: border-box;
-	background-color: #FFFFFF;
-	float: left;
-}
-
 .center{
 	text-align: center;
 }
@@ -48,16 +37,11 @@ input[type=message]{
 }
 
 .chat {
-	background-color:#202020;
+	background-color:#333A41;
 	position: absolute;
 	width: 80%;
 	height: 100%;
 	right: 0;
-}
-
-.messenger {
-	width: 80%;
-	height: 100%;
 }
 
 .contacts {
@@ -80,16 +64,17 @@ a{
   display: none;
   text-align: center;
   z-index: 9;
-  transition-duration: 0.2s;
+  transition-duration: 0.3s;
 }
 
 .send_div {
+	background-color: #FFFFFF;
 	width: 80%;
 	position: absolute;
 	bottom: 0;
 	right: 0;
 }
-/* Set a style for all buttons */
+
 button {
 	font-family: 'Roboto';
 	font-size: 20px;
@@ -101,12 +86,9 @@ button {
 	width: 300px;
 	border: 2px solid #FFFFFF;
 	border-radius: 40px;
-	transition-duration: 0.2s;
+	transition-duration: 0.3s;
 }
 
-
-
-/* Add a hover effect for buttons */
 button:hover {
 	background-color: #7D4698;
 	border: 2px solid #7D4698;
@@ -122,6 +104,34 @@ button:focus {
 
 input:focus {
 	 outline: none;
+}
+
+#message {
+	background-color: #EAEBEC;
+	color: #F8F9FA0;
+	padding: 12px 20px;
+	width: calc(80% - 10px);
+}
+
+#sendBtn {
+	color: #F8F9FA0;
+	background-color: #EAEBEC;
+	padding: 12px 20px;
+	font-size: 12px;
+	cursor: pointer;
+	width: 20%;
+
+}
+
+#sendBtn:hover {
+	background-color: #7D4698;
+	color: #F8F9FA;
+}
+
+#sendBtn:focus {
+    outline: none;
+	background-color: #59316B;
+	color: #F8F9FA;
 }
 
 #register {
