@@ -4,12 +4,13 @@
 
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="styles
+	.css">
 </head>
 
-<body>
+<body onload="openTor();">
 
-<img src="TorMee.png">
+<img src="pics/TorMee.png">
 <div class="center">
 	<div class="left"><button onclick="openLog(); closeReg();">LOGIN</button></div>
 	<div class="right"><button onclick="openReg(); closeLog();">REGISTER</button></div>
@@ -70,7 +71,7 @@
 function openLog() {
 	if (document.getElementById("Log").style.display == "block") {
 	document.getElementById("Log").style.display = "none";
-  }
+}
   else {
 	document.getElementById("Log").style.display = "block";
   }
