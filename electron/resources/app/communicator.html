@@ -23,8 +23,7 @@
 		<a href="settings.html"><img id="hentaispinner" src="pics/hentaispinner.png"></a>
 	</div>
 
-	<div class="chat">
-	xD
+	<div id="chat">
 	</div>
 
 	<div class="send_div">
@@ -47,12 +46,32 @@
 	document.getElementById("sendBtn").onclick = function() {
 	addBtn("xD");
 	};
+	
+	function addMsg(text) {
+	var element = document.createElement("p");
+	element.innerHTML = text;
+	element.className = "msg";
 
+	var foo = document.getElementById("chat");
+	foo.appendChild(element);
+	}
+
+	var input = document.getElementById("message");
+	input.addEventListener("keyup", function(event) {
+	  if (event.keyCode === 13) {
+		event.preventDefault();
+		addMsg(document.getElementById("message").value);
+		document.getElementById("message").value = "";
+	  }
+	});
+	
 	$('button', ".contacts").on('click', function(){
     $('button', ".contacts").not(this).removeClass('selected');
 	if ($(this).hasClass('selected')) { $(this).removeClass('selected')}
 	else { $(this).addClass('selected')}
 	});
+	
+	
 
 	</script>
 </body>

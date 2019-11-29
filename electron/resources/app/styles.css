@@ -45,19 +45,10 @@ input[type=text], input[type=password] {
 	width: 50%;
 }
 
-.chat {
-	background-color:#333A41;
-	position: absolute;
-	top: 0;
-	width: 80%;
-	height: 100%;
-	right: 0;
-}
-
 .contacts {
 	width: 20%;
 	height: calc(100% - 105px);
-	position: absolute;
+	position: fixed;
 	top: 43px;
 	background-color: #2C333A;
 	overflow-y: scroll;
@@ -97,9 +88,23 @@ input[type=text], input[type=password] {
 .send_div {
 	background-color: #FFFFFF;
 	width: 80%;
-	position: absolute;
+	position: fixed;
 	bottom: 0;
 	right: 0;
+}
+
+.msg {
+	color: white;
+	max-width: 80%;
+	min-width: 50%;
+	float: right;
+	margin: 5px;
+	padding: 10px 10px;
+	background-color: #272E35;
+	border: 2px solid  #272E35;
+	border-radius: 10px;
+	word-wrap: break-word;
+	text-align: right;
 }
 
 button {
@@ -135,6 +140,29 @@ button:focus {
 input:focus {
 	 outline: none;
 }
+
+#chat {
+	background-color:#333A41;
+	position: fixed;
+	top: 0;
+	width: 80%;
+	height: calc(100% - 63px);
+	right: 0;
+	overflow-y: scroll;
+}
+
+#chat::-webkit-scrollbar-thumb {
+	background: #333A41;
+}
+
+#chat::-webkit-scrollbar-track {
+	background: #333A41;
+}
+
+#chat:hover::-webkit-scrollbar-thumb {
+	background: #272E35;
+}
+
 
 #message {
 	background-color: #EAEBEC;
@@ -212,6 +240,7 @@ input:focus {
 }
 
 #searchbox {
+	position: fixed;
 	width: 20%;
 	background-color: #2C333A;
 }
