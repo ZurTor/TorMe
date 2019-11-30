@@ -27,8 +27,8 @@
 	</div>
 
 	<div class="send_div">
-	<input type="text" placeholder="your message" class="text" id="message">
-		<button id="sendBtn">Send</button>
+	<textarea type="text" placeholder="your message" class="text" id="message"></textarea>
+	<button id="sendBtn">Send</button>
 	</div>
 	<script>
 	function addBtn(text) {
@@ -49,27 +49,64 @@
 	
 	function addMsg(text) {
 	var element = document.createElement("p");
+	var chat = document.getElementById("chat");
 	element.innerHTML = text;
-	element.className = "msg";
+	element.className = ("msg");
+	if (chat.lastChild.className === "msg" || chat.lastChild.className === "msg connectUp") {
+		element.classList.add("connectUp");
+		chat.lastChild.classList.add("connectDown");
+	}
 
-	var foo = document.getElementById("chat");
-	foo.appendChild(element);
+	chat.appendChild(element);
+	}
+	
+	function addMsg2(text) {
+	var element = document.createElement("p");
+	var chat = document.getElementById("chat");
+	element.innerHTML = text;
+	element.className = "msg2";
+	if (chat.lastChild.className === "msg2" || chat.lastChild.className === "msg2 connectUp") {
+		element.classList.add("connectUp2");
+		chat.lastChild.classList.add("connectDown2");
+	}
+
+	
+	chat.appendChild(element);
 	}
 
 	var input = document.getElementById("message");
 	input.addEventListener("keyup", function(event) {
-	  if (event.keyCode === 13) {
-		event.preventDefault();
-		addMsg(document.getElementById("message").value);
-		document.getElementById("message").value = "";
+	if(event.keyCode == 13 && !event.shiftKey){
+		if (/\S/.test(document.getElementById("message").value)){
+			addMsg(document.getElementById("message").value);
+			document.getElementById("message").style.height = "46px";
+			document.querySelector(".send_div").style.height = "61px";
+			document.getElementById("chat").scrollTo(0,document.querySelector("#chat").scrollHeight);
+			document.getElementById("message").value = "";
+		}
 	  }
 	});
+	
+	var textarea = document.querySelector('textarea');
+	var send_div = document.querySelector('.send_div');
+
+	textarea.addEventListener('keydown', autosize);
+	send_div.addEventListener('keydown', autosize);
+             
+	function autosize(){
+		var el = this;
+		setTimeout(function(){
+		el.style.cssText = 'height:auto; padding:0';
+		el.style.cssText = 'height:' + el.scrollHeight + 'px';
+		},0);
+}
 	
 	$('button', ".contacts").on('click', function(){
     $('button', ".contacts").not(this).removeClass('selected');
 	if ($(this).hasClass('selected')) { $(this).removeClass('selected')}
 	else { $(this).addClass('selected')}
 	});
+	
 	
 	
 
