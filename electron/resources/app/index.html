@@ -36,6 +36,8 @@
 		<div>
 		<label id=emptyerr style="color:#b54747"><b>Username or password cannot be empty!</b></label>
 		<label id=specialerr style="color:#b54747"><b>Username or password special characters!</b></label>
+		<label id=disconn style="color:#b54747"><b>Server is offline</b></label>
+
 		</div>
 </div>
 
@@ -47,8 +49,11 @@
 		<div>
 		<input type="text" placeholder="Enter Username" id="usernameReg" class="text">
 		</div>
-		<button id="register">Register</button>
+		<button id="register" onclick="regme()">Register</button>
 		<p>By creating an account you agree to our <br> <a href="#">Terms & Privacy</a>.</p>
+		<div>
+			<label id=repasserr style="color:#b54747"><b>Passwords must be equal!</b></label>
+		</div>
 	</div>
 	<div class="right">
 		<div>
@@ -77,6 +82,7 @@ function openLog() {
   }
 	document.getElementById("emptyerr").style.display = "none";
 	document.getElementById("specialerr").style.display = "none";
+	document.getElementById("disconn").style.display = "none";
 }
 
 function closeLog() {
@@ -86,25 +92,15 @@ function closeLog() {
 function openReg() {
 	if (document.getElementById("Reg").style.display == "block") {
 	document.getElementById("Reg").style.display = "none";
+	document.getElementById("disconn").style.display = "none";
+
   }
   else {
 	document.getElementById("Reg").style.display = "block";
+	document.getElementById("repasserr").style.display = "none";
   }
 }
 
-/*function isAlphaNumeric(str) {
-  var code, i, len;
-
-  for (i = 0, len = str.length; i < len; i++) {
-    code = str.charCodeAt(i);
-    if (!(code > 47 && code < 58) && // numeric (0-9)
-        !(code > 64 && code < 91) && // upper alpha (A-Z)
-        !(code > 96 && code < 123)) { // lower alpha (a-z)
-      return false;
-    }
-  }
-  return true;
-};*/
 
 function closeReg() {
   document.getElementById("Reg").style.display = "none";
@@ -119,13 +115,49 @@ function logme() {
 	if((logarg=='') || (passarg=='')){
 	document.getElementById("emptyerr").style.display = "block";
 	}
-	else if(format.test(logarg) || format.test(passarg))
+	else if(format.test(logarg))
 	{
 	document.getElementById("specialerr").style.display = "block";
 	}
 	else
 	{
 	logSend(logarg, passarg);
+		if(checkConn()==false){
+			document.getElementById("disconn").style.display = "block";
+		}
+		else {
+			document.getElementById("disconn").style.display = "none";
+		}
+	}
+}
+function regme() {
+	var format = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
+	var logarg = document.getElementById("usernameReg").value;
+	var passarg = document.getElementById("passwordReg").value;
+	var repassarg = document.getElementById("password2Reg").value;
+	document.getElementById("specialerr").style.display = "none";
+	document.getElementById("emptyerr").style.display = "none";
+	document.getElementById("repasserr").style.display = "none";
+	if((logarg=='') || (passarg=='')){
+	document.getElementById("emptyerr").style.display = "block";
+	}
+	else if(format.test(logarg))
+	{
+	document.getElementById("specialerr").style.display = "block";
+	}
+	else if(passarg!=repassarg)
+	{
+	document.getElementById("repasserr").style.display = "block";
+	}
+	else
+	{
+	regSend(logarg, passarg);
+		if(checkConn()==false){
+			document.getElementById("disconn").style.display = "block";
+		}
+		else {
+			document.getElementById("disconn").style.display = "none";
+		}
 	}
 }
 </script>

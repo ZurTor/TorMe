@@ -11,13 +11,14 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     width: 1200,
     height: 900,
-	frame: false,
+    backgroundColor: "#333A41",
+	  frame: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true
     }
   })
-  
+
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
 
