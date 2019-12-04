@@ -31,6 +31,54 @@ input[type=text], input[type=password] {
 	background-color: #FFFFFF;
 }
 
+input:focus {
+	 outline: none;
+}
+
+textarea {
+	width: 300px;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 3px solid white;
+	box-sizing: border-box;
+	background-color: #FFFFFF;
+}
+
+textarea:focus {
+	outline: none;
+}
+
+button {
+	font-family: 'Roboto';
+	font-size: 20px;
+	background-color: #FFFFFF;
+	color: #333A41;
+	padding: 14px 20px;
+	margin: 10px 0;
+	cursor: pointer;
+	width: 300px;
+	border: 2px solid #FFFFFF;
+	border-radius: 40px;
+	transition-duration: 0.3s;
+}
+
+button:hover {
+	background-color: #7D4698;
+	border: 2px solid #7D4698;
+	color: #F8F9FA;
+}
+
+button.selected {
+	background-color: #59316B;
+	border: 2px solid #59316B;
+	color: #F8F9FA;
+}
+
+button:focus {
+	outline: none;
+}
+
 .center{
 	text-align: center;
 }
@@ -45,19 +93,10 @@ input[type=text], input[type=password] {
 	width: 50%;
 }
 
-.chat {
-	background-color:#333A41;
-	position: absolute;
-	top: 0;
-	width: 80%;
-	height: 100%;
-	right: 0;
-}
-
 .contacts {
 	width: 20%;
 	height: calc(100% - 105px);
-	position: absolute;
+	position: fixed;
 	top: 43px;
 	background-color: #2C333A;
 	overflow-y: scroll;
@@ -97,61 +136,116 @@ input[type=text], input[type=password] {
 .send_div {
 	background-color: #FFFFFF;
 	width: 80%;
-	position: absolute;
+	height: 61px;
+	max-height: 200px;
+	resize: vertical;
+	position: fixed;
 	bottom: 0;
 	right: 0;
 }
 
-button {
-	font-family: 'Roboto';
-	font-size: 20px;
-	background-color: #FFFFFF;
-	color: #333A41;
-	padding: 14px 20px;
-	margin: 10px 0;
-	cursor: pointer;
-	width: 300px;
-	border: 2px solid #FFFFFF;
-	border-radius: 40px;
-	transition-duration: 0.3s;
-}
-
-button:hover {
+.msg {
+	color: white;
+	max-width: 80%;
+	min-width: 50%;
+	float: right;
+	margin: 5px;
+	padding: 10px 10px;
 	background-color: #7D4698;
-	border: 2px solid #7D4698;
-	color: #F8F9FA;
+	border: 2px solid  #7D4698;
+	border-radius: 30px;
+	word-wrap: break-word;
+	text-align: right;
+	white-space: pre-wrap;
 }
 
-button.selected {
+.msg2 {
+	color: white;
+	max-width: 80%;
+	min-width: 50%;
+	float: left;
+	margin: 5px;
+	padding: 10px 10px;
 	background-color: #59316B;
-	border: 2px solid #59316B;
-	color: #F8F9FA;
+	border: 2px solid  #59316B;
+	border-radius: 30px;
+	word-wrap: break-word;
+	text-align: left;
+	white-space: pre-wrap;
 }
 
-button:focus {
-	outline: none;
+.connectUp {
+	margin-top: 1px;
+	border-top-right-radius: 1px 1px;
 }
 
-input:focus {
-	 outline: none;
+.connectDown {
+	margin-bottom: 1px;
+	border-bottom-right-radius: 1px 1px;
 }
+
+.connectUp2 {
+	margin-top: 1px;
+	border-top-left-radius: 1px 1px;
+}
+
+.connectDown2 {
+	margin-bottom: 1px;
+	border-bottom-left-radius: 1px 1px;
+}
+
+
+#chat {
+	background-color:#333A41;
+	position: fixed;
+	top: 0;
+	width: 80%;
+	height: calc(100% - 63px);
+	right: 0;
+	overflow-y: scroll;
+}
+
+#chat::-webkit-scrollbar-thumb {
+	background: #333A41;
+}
+
+#chat::-webkit-scrollbar-track {
+	background: #333A41;
+}
+
+#chat:hover::-webkit-scrollbar-thumb {
+	background: #272E35;
+}
+
 
 #message {
 	background-color: #EAEBEC;
 	color: #F8F9FA0;
-	padding: 12px 20px;
-	width: calc(80% - 10px);
+	padding: 1px 10px;
+	width: calc(80% - 15px);
+	min-height: 46px;
+	word-wrap: break-word;
+	resize: vertical;
+	max-height: 140px;
+	overflow: scrolls;
+	float: left;
+}
+
+#message::-webkit-scrollbar {
+	width: 0;
 }
 
 #sendBtn {
+	position: fixed;
 	color: #F8F9FA0;
 	background-color: #EAEBEC;
 	padding: 14px 20px;
 	font-size: 12px;
 	cursor: pointer;
-	width: 20%;
+	width: calc(0.2*80%);
+	margin: 1px;
 	border: none;
-
+	bottom: 7px;
 }
 
 #sendBtn:hover {
@@ -212,6 +306,7 @@ input:focus {
 }
 
 #searchbox {
+	position: fixed;
 	width: 20%;
 	background-color: #2C333A;
 }
