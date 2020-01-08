@@ -143,29 +143,50 @@ button:focus {
 	bottom: 0;
 	right: 0;
 }
+.msg1_div_1 {
+	float: left;
+	width: 100%;
+}
+
+.msg1_div_2 {
+	float: right;
+	max-width: 80%;
+	width: auto;
+}
+
+.msg2_div_1 {
+	float: left;
+	width: 100%;
+}
+
+.msg2_div_2 {
+	float: left;
+	max-width: 80%;
+	width: auto;
+}
 
 .msg {
 	color: white;
-	max-width: 80%;
-	min-width: 50%;
-	float: right;
+	width: auto;
+	max-width: 95%;
+	float: left;
 	margin: 5px;
-	padding: 10px 10px;
+	padding: 5px 10px;
 	background-color: #7D4698;
 	border: 2px solid  #7D4698;
 	border-radius: 30px;
 	word-wrap: break-word;
-	text-align: right;
+	text-align: left;
 	white-space: pre-wrap;
 }
 
 .msg2 {
 	color: white;
-	max-width: 80%;
-	min-width: 50%;
+	width: auto;
+	max-width: 95%;
 	float: left;
 	margin: 5px;
-	padding: 10px 10px;
+	padding: 5px 10px;
 	background-color: #59316B;
 	border: 2px solid  #59316B;
 	border-radius: 30px;
@@ -291,6 +312,45 @@ button:focus {
 	background-color: #272E35;
 }
 
+#add_frnd_popup{
+	position: absolute;
+	width: 400px;
+	height: 300px;
+	left: calc(50% - 200px);
+	top: calc(50% - 150px);
+	background-color: #272E35;
+	z-index: 1;
+	display: none;
+	overflow: auto;
+	border-radius: 15px;
+	border: 2px solid #272E35;
+}
+
+#add_frnd {
+	position: relative;
+	width: 10%;
+	margin: 5px 5px;
+	cursor: pointer;
+}
+
+#add_searchbar {
+	position: relative;
+	width: 70%;
+	left: 15%;
+	padding: 6px 20px;
+	border-radius: 10px;
+	background-color: #333A41;
+	border: 2px solid #333A41;
+	color: white;
+}
+
+#close_adding{
+	position: relative;
+	width: 7%;
+	margin: 5px 5px;
+	float: right;
+}
+
 #hentaispinner {
 	position: fixed;
 	left: calc(20% - 27px);
@@ -313,7 +373,7 @@ button:focus {
 
 /* width */
 ::-webkit-scrollbar {
- width: 6px;
+ width: 10px;
 }
 /* Track */
 ::-webkit-scrollbar-track {

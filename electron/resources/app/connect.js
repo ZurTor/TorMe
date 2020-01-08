@@ -22,14 +22,25 @@ async function checkConn(){
   }
 }
 connection = new Boolean(true);
-async function logSend() {
+function logSend() {
   const {PythonShell} = require('python-shell')
   let pyshell = new PythonShell('resources/app/connect.py');
-  pyshell.send("login" + ' ' + arguments[0] + ' ' + arguments[1]);
+  pyshell.send("login" + ' ' + arguments[0] + ' ' + arguments[1] + '');
   pyshell.on('message', function (message) {
-    if (message==="disconnected") {
-      connection = false;
+    console.log(message);
+    if (message == "token"){
+      window.location.replace("communicator.html");
     }
+  });
+  pyshell.end(function (err,code,signal) {
+    if (err) throw err;
+  });
+}
+function regSend() {
+  const {PythonShell} = require('python-shell')
+  let pyshell = new PythonShell('resources/app/connect.py');
+  pyshell.send("register" + ' ' + arguments[0] + ' ' + arguments[1] + '');
+  pyshell.on('message', function (message) {
     console.log(message);
 
   });
@@ -37,16 +48,34 @@ async function logSend() {
     if (err) throw err;
   });
 }
-async function regSend() {
+async function checkMsg() {
   const {PythonShell} = require('python-shell')
   let pyshell = new PythonShell('resources/app/connect.py');
-  pyshell.send("register" + ' ' + arguments[0] + ' ' + arguments[1] + '');
+  pyshell.send("checkmsg" + ' ' + arguments[0] + ' ' + arguments[1] + '');
   pyshell.on('message', function (message) {
-    if (message==="disconnected") {
-      connection = false;
-    }
     console.log(message);
-
+  });
+  pyshell.end(function (err,code,signal) {
+    if (err) throw err;
+  });
+}
+async function sendMsg() {
+  const {PythonShell} = require('python-shell')
+  let pyshell = new PythonShell('resources/app/connect.py');
+  pyshell.send("sendMsg" + ' ' + arguments[0] + ' ' + arguments[1] + '');
+  pyshell.on('message', function (message) {
+    console.log(message);
+  });
+  pyshell.end(function (err,code,signal) {
+    if (err) throw err;
+  });
+}
+async function getPubkey() {
+  const {PythonShell} = require('python-shell')
+  let pyshell = new PythonShell('resources/app/connect.py');
+  pyshell.send("getPubkey" + ' ' + arguments[0] + '');
+  pyshell.on('message', function (message) {
+    console.log(message);
   });
   pyshell.end(function (err,code,signal) {
     if (err) throw err;

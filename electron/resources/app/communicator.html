@@ -7,13 +7,17 @@
 	<link rel="stylesheet" href="styles.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
-
+<body onload="openTor();">
 <body>
+	<div id = "add_frnd_popup">
+		<input type="text" placeholder="search for username" class="text" id="add_searchbar">
+	</div>
 	<div id="searchbox">
 	<input type="text" placeholder="search" class="text" id="searchbar">
 	<hr>
 	</div>
 	<div class="contacts" id="contacts">
+		<div id = "add_frnd" onclick="document.getElementById('add_frnd_popup').style.display='block'"><img src="pics/Slimboi.png"></div>
 	</div>
 
 	<div id="profile">
@@ -31,12 +35,19 @@
 	<button id="sendBtn">Send</button>
 	</div>
 	<script>
+	window.addEventListener('click', function(e){
+
+  	if (!document.getElementById('add_frnd_popup').contains(e.target) && !document.getElementById('add_frnd').contains(e.target)){
+    		document.getElementById('add_frnd_popup').style.display = 'none';
+  		}
+		});
+
 	function addBtn(text) {
 	var element = document.createElement("button");
-	element.value = text;
+	element.innerHTML = text;
 	element.className = "contact";
 	element.onclick = function() {
-		alert("blabla");
+		getPubkey(text);
 	};
 
 	var foo = document.getElementById("contacts");
@@ -44,34 +55,44 @@
 	}
 
 	document.getElementById("sendBtn").onclick = function() {
-	addBtn("xD");
+	addBtn("Zufar");
 	};
-	
+
 	function addMsg(text) {
-	var element = document.createElement("p");
+	var div1 = document.createElement("div");
+	div1.className = ("msg1_div_1");
+	var div2 = document.createElement("div");
+	div2.className = ("msg1_div_2");
+	var element = document.createElement("span");
 	var chat = document.getElementById("chat");
 	element.innerHTML = text;
 	element.className = ("msg");
-	if (chat.lastChild.className === "msg" || chat.lastChild.className === "msg connectUp") {
+	if (chat.lastChild.className === "msg1_div_1" || chat.lastChild.className === "msg1_div_1 connectUp") {
 		element.classList.add("connectUp");
-		chat.lastChild.classList.add("connectDown");
+		chat.lastChild.lastChild.lastChild.classList.add("connectDown");
+	}
+	div2.appendChild(element);
+	div1.appendChild(div2);
+	chat.appendChild(div1);
+	sendMsg(text)
 	}
 
-	chat.appendChild(element);
-	}
-	
 	function addMsg2(text) {
-	var element = document.createElement("p");
+	var div1 = document.createElement("div");
+	div1.className = ("msg2_div_1");
+	var div2 = document.createElement("div");
+	div2.className = ("msg2_div_2");
+	var element = document.createElement("span");
 	var chat = document.getElementById("chat");
 	element.innerHTML = text;
-	element.className = "msg2";
-	if (chat.lastChild.className === "msg2" || chat.lastChild.className === "msg2 connectUp") {
+	element.className = ("msg2");
+	if (chat.lastChild.className === "msg2_div_1" || chat.lastChild.className === "msg2_div_1 connectUp") {
 		element.classList.add("connectUp2");
-		chat.lastChild.classList.add("connectDown2");
+		chat.lastChild.lastChild.lastChild.classList.add("connectDown2");
 	}
-
-	
-	chat.appendChild(element);
+	div2.appendChild(element);
+	div1.appendChild(div2);
+	chat.appendChild(div1);
 	}
 
 	var input = document.getElementById("message");
@@ -83,16 +104,17 @@
 			document.querySelector(".send_div").style.height = "61px";
 			document.getElementById("chat").scrollTo(0,document.querySelector("#chat").scrollHeight);
 			document.getElementById("message").value = "";
+			console.log("ADDMSG")
 		}
 	  }
 	});
-	
+
 	var textarea = document.querySelector('textarea');
 	var send_div = document.querySelector('.send_div');
 
 	textarea.addEventListener('keydown', autosize);
 	send_div.addEventListener('keydown', autosize);
-             
+
 	function autosize(){
 		var el = this;
 		setTimeout(function(){
@@ -100,16 +122,17 @@
 		el.style.cssText = 'height:' + el.scrollHeight + 'px';
 		},0);
 }
-	
+
 	$('button', ".contacts").on('click', function(){
     $('button', ".contacts").not(this).removeClass('selected');
 	if ($(this).hasClass('selected')) { $(this).removeClass('selected')}
 	else { $(this).addClass('selected')}
 	});
-	
-	
-	
+
+
+
 
 	</script>
+	<script src="connect.js"></script>
 </body>
 </html>
