@@ -134,7 +134,10 @@
 		el.style.cssText = 'height:' + el.scrollHeight + 'px';
 		},0);
 }
-
+function fetchMsg() {
+  var data = setInterval(getMsg, 5000);
+	addMsg2(data);
+}
 	function getUser() {
 		var path = require('path');
 		var p = path.join(__dirname,'temp/user');

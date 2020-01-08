@@ -76,6 +76,17 @@ async function sendMsg() {
     if (err) throw err;
   });
 }
+async function getMsg() {
+  const {PythonShell} = require('python-shell')
+  let pyshell = new PythonShell('resources/app/connect.py');
+  pyshell.send("getMsg");
+  pyshell.on('message', function (message) {
+    return message;
+  });
+  pyshell.end(function (err,code,signal) {
+    if (err) throw err;
+  });
+}
 async function getPubkey() {
   const {PythonShell} = require('python-shell')
   let pyshell = new PythonShell('resources/app/connect.py');

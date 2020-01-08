@@ -97,10 +97,11 @@ else:
             data += packet
             if packet[-2] == 0 and packet[-1] == 46: break
         backlist = pickle.loads(data)
+        backlist = cipher.decode_priv(backlist)
         inString = ""
-        for i in range(len(backlist)):
-            inString += cipher.decode_priv(backlist[i])
-            inString += "\n"
+        for i in range(len(backlist), 2):
+            who = backlist[i]
+            inString += backlist[i+1]
         print(inString)
     if args[0] == "getPubkey":
         getKey = {"type" : "getKey", "username" : args[1]}
