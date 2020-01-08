@@ -9,8 +9,13 @@ let mainWindow
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 900,
+    'minWidth': 700,
+    'minHeight': 700,
+    width: 700,
+    height: 700,
+    resizable: false,
+    center: true,
+    darkTheme: true,
     backgroundColor: "#333A41",
 	  frame: true,
     webPreferences: {

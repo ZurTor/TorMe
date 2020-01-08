@@ -10,7 +10,8 @@
 <body onload="openTor();">
 <body>
 	<div id = "add_frnd_popup">
-		<input type="text" placeholder="search for username" class="text" id="add_searchbar">
+		<input type="text" placeholder="username" class="text" id="add_searchbar">
+		<button id="add_frnd_button">add</button>
 	</div>
 	<div id="searchbox">
 	<input type="text" placeholder="search" class="text" id="searchbar">
@@ -54,8 +55,19 @@
 	foo.appendChild(element);
 	}
 
+	document.getElementById("add_frnd_button").onclick = function() {
+		addBtn(document.getElementById("add_searchbar").value);
+	};
+
 	document.getElementById("sendBtn").onclick = function() {
-	addBtn("Zufar");
+		if (/\S/.test(document.getElementById("message").value)){
+			addMsg(document.getElementById("message").value);
+			document.getElementById("message").style.height = "46px";
+			document.querySelector(".send_div").style.height = "61px";
+			document.getElementById("chat").scrollTo(0,document.querySelector("#chat").scrollHeight);
+			document.getElementById("message").value = "";
+			console.log("ADDMSG(btn)")
+		}
 	};
 
 	function addMsg(text) {
