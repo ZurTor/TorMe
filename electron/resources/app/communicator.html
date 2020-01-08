@@ -45,14 +45,14 @@
 
 	function addBtn(text) {
 	var element = document.createElement("button");
-	element.innerHTML = text;
+	element.innerText = text;
 	element.className = "contact";
 	element.onclick = function() {
 		getPubkey(text);
 	};
 
-	var foo = document.getElementById("contacts");
-	foo.appendChild(element);
+	var contacts = document.getElementById("contacts");
+	contacts.insertBefore(element, contacts.childNodes[contacts.childNodes.length - 2]);
 	}
 
 	document.getElementById("add_frnd_button").onclick = function() {
