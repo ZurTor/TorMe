@@ -10,7 +10,7 @@
 
 <body onload="openTor();">
 
-<img src="pics/TorMee.png">
+<img id="logo" src="pics/torme.png">
 <div class="center">
 	<div class="left"><button onclick="openLog(); closeReg();">LOGIN</button></div>
 	<div class="right"><button onclick="openReg(); closeLog();">REGISTER</button></div>
@@ -31,7 +31,7 @@
 		<input type="password" placeholder="Enter Password" id="passwordLog" class="text">
 		</div>
 		<div>
-		<button onclick="logme()">Login</button>
+		<button id="login" onclick="logme()">Login</button>
 		</div>
 		<div>
 		<label id=emptyerr style="color:#b54747"><b>Username or password cannot be empty!</b></label>
@@ -71,6 +71,9 @@
 		</div>
 	</div>
 </div>
+<div class="loader l1"></div>
+<div class="loader l2"></div>
+<div class="loader l3"></div>
 <a href="communicator.html"><button></button></a>
 <script>
 function openLog() {
@@ -121,6 +124,7 @@ function logme() {
 	}
 	else
 	{
+	document.querySelectorAll(".loader").forEach(a=>a.style.display = "inline-block");
 	logSend(logarg, passarg);
 	}
 }
@@ -145,15 +149,24 @@ function regme() {
 	}
 	else
 	{
+	document.querySelectorAll(".loader").forEach(a=>a.style.display = "inline-block");
 	regSend(logarg, passarg);
-		if(checkConn()==false){
-			document.getElementById("disconn").style.display = "block";
-		}
-		else {
-			document.getElementById("disconn").style.display = "none";
-		}
 	}
 }
+
+var input = document.getElementById("usernameLog");
+input.addEventListener("keyup", function(event) {
+if(event.keyCode == 13 && !event.shiftKey){
+	document.getElementById("login").click();
+	}
+});
+
+var input = document.getElementById("passwordLog");
+input.addEventListener("keyup", function(event) {
+if(event.keyCode == 13 && !event.shiftKey){
+	document.getElementById("login").click();
+	}
+});
 </script>
 <script src="connect.js"></script>
 

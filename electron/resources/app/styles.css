@@ -69,15 +69,13 @@ button:hover {
 	color: #F8F9FA;
 }
 
-button.selected {
+button:focus{
 	background-color: #59316B;
 	border: 2px solid #59316B;
 	color: #F8F9FA;
-}
-
-button:focus {
 	outline: none;
 }
+
 
 .center{
 	text-align: center;
@@ -215,6 +213,39 @@ button:focus {
 	border-bottom-left-radius: 1px 1px;
 }
 
+.loader {
+	display: none;
+	position: absolute;
+	left: calc(50% - 20px);
+	bottom: 4%;
+	border: 0px;
+	border-top: 12px #6B3C82;
+	border-bottom: 12px #6B3C82;
+  border-radius: 100%;
+	border-style: double;
+  width: 40px;
+  height: 40px;
+}
+
+.l1 {
+	animation: spin 2s ease-out infinite;
+	z-index: 2;
+}
+
+.l2 {
+  animation: spin 2s linear infinite;
+	z-index: 1;
+}
+
+.l3 {
+	animation: spin 2s ease-in infinite;
+	z-index: 3;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
 #chat {
 	background-color:#333A41;
@@ -314,10 +345,10 @@ button:focus {
 
 #add_frnd_popup{
 	position: absolute;
-	width: 400px;
-	height: 300px;
-	left: calc(50% - 200px);
-	top: calc(50% - 150px);
+	width: 200px;
+	height: 100px;
+	left: calc(50% - 100px);
+	top: calc(50% - 50px);
 	background-color: #272E35;
 	z-index: 1;
 	display: none;
@@ -328,7 +359,7 @@ button:focus {
 
 #add_frnd {
 	position: relative;
-	width: 10%;
+	width: 30px;
 	margin: 5px 5px;
 	cursor: pointer;
 }
@@ -344,7 +375,31 @@ button:focus {
 	color: white;
 }
 
-#close_adding{
+#add_frnd_button {
+	position: relative;
+	background-color: #333A41;
+	border: 2px solid #333A41;
+	width: 30%;
+	height: 25%;
+	left: 35%;
+	padding: 2px;
+	font-size: 15px;
+	color: #757575;
+}
+
+#add_frnd_button:hover {
+	background-color: #7D4698;
+	border: 2px solid #7D4698;
+	color: #F8F9FA;
+}
+
+#add_frnd_button:active {
+	background-color: #59316B;
+	border: 2px solid #59316B;
+	color: #F8F9FA;
+}
+
+#close_adding {
 	position: relative;
 	width: 7%;
 	margin: 5px 5px;
@@ -369,6 +424,12 @@ button:focus {
 	position: fixed;
 	width: 20%;
 	background-color: #2C333A;
+}
+
+#logo {
+	width: calc(100% - 20px);
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
 /* width */

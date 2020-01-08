@@ -39,7 +39,7 @@ else:
         login_bytes = cipher.server_crypt(jsonlog)
         picklist = []
         picklist.append(login_bytes)
-        soc.sendall(pickle.dumps(picklist))
+        soc.sendall(pickle.dumps(picklist) + b'XDD')
         data = b''
         while True:
             packet = soc.recv(16)

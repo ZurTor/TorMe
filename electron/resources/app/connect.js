@@ -1,6 +1,5 @@
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+const remote = require('electron').remote;
+
 async function openTor() {
   const {PythonShell} = require('python-shell')
   let pyshell = new PythonShell('resources/app/tor.py');
@@ -12,16 +11,7 @@ async function openTor() {
     if (err) throw err;
   });
 }
-async function checkConn(){
-  await sleep(10000);
-  if(connection==false){
-    return false;
-  }
-  else {
-    return true;
-  }
-}
-connection = new Boolean(true);
+
 function logSend() {
   const {PythonShell} = require('python-shell')
   let pyshell = new PythonShell('resources/app/connect.py');
@@ -29,7 +19,23 @@ function logSend() {
   pyshell.on('message', function (message) {
     console.log(message);
     if (message == "token"){
-      window.location.replace("communicator.html");
+      var xD = remote.getCurrentWindow();
+      const BrowserWindow = remote.BrowserWindow;
+      const win = new BrowserWindow({
+        'minWidth': 500,
+        'minHeight': 500,
+        height: 1000,
+        width: 1000,
+        center: true,
+        darkTheme: true,
+        frame: true,
+        webPreferences: {
+          preload: path.join(__dirname, 'preload.js'),
+          nodeIntegration: true
+        }
+      });
+      win.loadFile("communicator.html");
+      xD.close();
     }
   });
   pyshell.end(function (err,code,signal) {
