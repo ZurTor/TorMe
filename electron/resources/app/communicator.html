@@ -22,7 +22,7 @@
 	</div>
 
 	<div id="profile">
-		profpic
+		<span id="username"></span>
 	</div>
 	<div id="settings">
 		<a href="settings.html"><img id="hentaispinner" src="pics/hentaispinner.png"></a>
@@ -135,14 +135,23 @@
 		},0);
 }
 
+	function getUser() {
+		var path = require('path');
+		var p = path.join(__dirname,'temp/user');
+
+		var fs = require('fs');
+		fs.readFile(p, 'utf8', function (err, data) {
+		  if (err) return console.log(err);
+			document.getElementById("username").innerText = data;
+		});
+	}
+	window.onload = getUser();
+
 	$('button', ".contacts").on('click', function(){
     $('button', ".contacts").not(this).removeClass('selected');
 	if ($(this).hasClass('selected')) { $(this).removeClass('selected')}
 	else { $(this).addClass('selected')}
 	});
-
-
-
 
 	</script>
 	<script src="connect.js"></script>

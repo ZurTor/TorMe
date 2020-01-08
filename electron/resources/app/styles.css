@@ -217,7 +217,7 @@ button:focus{
 	display: none;
 	position: absolute;
 	left: calc(50% - 20px);
-	bottom: 4%;
+	bottom: 2%;
 	border: 0px;
 	border-top: 12px #6B3C82;
 	border-bottom: 12px #6B3C82;
