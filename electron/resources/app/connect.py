@@ -42,10 +42,7 @@ else:
         pubson = json.dumps({"pubkey": str(cipher.return_pub())})
         picklist = []
         picklist.append(login_bytes)
-<<<<<<< HEAD
-=======
         picklist.append(pubson)
->>>>>>> 45bac0f328c1d56605b9e9bd0500b5088a69feaf
         soc.sendall(pickle.dumps(picklist) + b'XDD')
         data = b''
         while True:
