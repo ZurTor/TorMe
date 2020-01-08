@@ -1,5 +1,5 @@
 const remote = require('electron').remote;
-
+const path = require('path');
 async function openTor() {
   const {PythonShell} = require('python-shell')
   let pyshell = new PythonShell('resources/app/tor.py');
