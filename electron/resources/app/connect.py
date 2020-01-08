@@ -35,11 +35,15 @@ else:
     if args[0] == "login":
         login = {"type":"login", "username": args[1], "password": args[2]}
         #login.insert(0,"login")
+        with open("resources/app/temp/user", "w") as f:
+            f.write(args[1])
         jsonlog = json.dumps(login)
         login_bytes = cipher.server_crypt(jsonlog)
+        pubson = json.dumps({"pubkey": str(cipher.return_pub())})
         picklist = []
         picklist.append(login_bytes)
-        soc.sendall(pickle.dumps(picklist))
+        picklist.append(pubson)
+        soc.sendall(pickle.dumps(picklist) + b'XDD')
         data = b''
         while True:
             packet = soc.recv(16)
@@ -60,13 +64,14 @@ else:
         picklist = []
         picklist.append(reg_bytes)
         picklist.append(pubson)
-        soc.sendall(pickle.dumps(picklist))
+        soc.sendall(pickle.dumps(picklist) + b'XDD')
     if args[0] == "sendMsg":
         f = open("resources/app/temp/token", "r")
         token = f.read()
         curruser = open("resources/app/temp/curruser", "r").read()
         print(curruser)
-        sendMsg = {"type" : "sendMsg", "destUser" : curruser, "token" : token}
+        user = open("resources/app/temp/user", "r").read()
+        sendMsg = {"type" : "sendMsg", "destUser" : curruser, "token" : token, "mainUser" : user}
         print(sendMsg)
         jsonlog = json.dumps(sendMsg)
         msg_bytes = cipher.server_crypt(jsonlog)
@@ -74,16 +79,17 @@ else:
         picklist.append(msg_bytes)
         picklist.append(cipher.client_crypt(args[1]))
         print(picklist[1])
-        soc.sendall(pickle.dumps(picklist))
+        soc.sendall(pickle.dumps(picklist) + b'XDD')
     if args[0] == "getMsg":
         f = open("resources/app/temp/token", "r")
         token = f.read()
-        sendMsg = {"type" : "getMsg", "token" : token}
+        user = open("/resources/app/user", "r").read()
+        sendMsg = {"type" : "getMsg", "token" : token, "username" : user}
         jsonlog = json.dumps(sendMsg)
         msg_bytes = cipher.server_crypt(jsonlog)
         picklist = []
         picklist.append(msg_bytes)
-        soc.sendall(pickle.dumps(picklist))
+        soc.sendall(pickle.dumps(picklist) + b'XDD')
         data = b''
         while True:
             packet = soc.recv(16)
@@ -102,7 +108,7 @@ else:
         key_bytes = cipher.server_crypt(jsonlog)
         picklist = []
         picklist.append(key_bytes)
-        soc.sendall(pickle.dumps(picklist))
+        soc.sendall(pickle.dumps(picklist) + b'XDD')
         data = b''
         while True:
             packet = soc.recv(16)
