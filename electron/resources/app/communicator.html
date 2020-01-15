@@ -120,13 +120,20 @@
 	var div2 = document.createElement("div");
 	div2.className = ("msg2_div_2");
 	var element = document.createElement("span");
-	var chat = document.getElementById("chat");
+	var chats = document.getElementsByClassName("chat");
+	for(var i = 0; i < chats.length; i++) {
+		a = chats[i].style.display;
+		if(a == "block"){
+			var chat = chats[i];
+		}
+	}
 	element.innerHTML = text;
 	element.className = ("msg2");
+	if (chat.lastChild) {
 	if (chat.lastChild.className === "msg2_div_1" || chat.lastChild.className === "msg2_div_1 connectUp") {
 		element.classList.add("connectUp2");
 		chat.lastChild.lastChild.lastChild.classList.add("connectDown2");
-	}
+	}}
 	div2.appendChild(element);
 	div1.appendChild(div2);
 	chat.appendChild(div1);
@@ -140,7 +147,7 @@
 	});
 
 	var textarea = document.querySelector('textarea');
-	var send_div = document.querySelector('.send_div');
+	var send_div = document.querySelector('#send_div');
 
 	textarea.addEventListener('keydown', autosize);
 	send_div.addEventListener('keydown', autosize);
@@ -158,11 +165,6 @@
 
 }
 
-document.getElementById("beczka").onclick = function(){
-	console.log("click");
-	fetchMsg();
-};
-
 	function onLoad(){
 		openTor();
 		getUser();
@@ -177,11 +179,6 @@ document.getElementById("beczka").onclick = function(){
 			document.getElementById("username").innerText = data;
 		});
 	}
-	$('button', ".contacts").on('click', function(){
-    $('button', ".contacts").not(this).removeClass('selected');
-	if ($(this).hasClass('selected')) { $(this).removeClass('selected')}
-	else { $(this).addClass('selected')}
-	});
 
 	</script>
 	<script src="connect.js"></script>
