@@ -74,7 +74,7 @@
 <div class="loader l1"></div>
 <div class="loader l2"></div>
 <div class="loader l3"></div>
-<a href="communicator.html"><button></button></a>
+<button id = "logmeDebug"></button>
 <script>
 function openLog() {
 	if (document.getElementById("Log").style.display == "block") {
@@ -188,6 +188,26 @@ if(event.keyCode == 13 && !event.shiftKey){
 	document.getElementById("register").click();
 	}
 });
+
+document.getElementById("logmeDebug").onclick = function() {
+	var xD = remote.getCurrentWindow();
+	const BrowserWindow = remote.BrowserWindow;
+	const win = new BrowserWindow({
+		'minWidth': 500,
+		'minHeight': 500,
+		height: 1000,
+		width: 1000,
+		center: true,
+		darkTheme: true,
+		frame: true,
+		webPreferences: {
+			preload: path.join(__dirname, 'preload.js'),
+			nodeIntegration: true
+		}
+	});
+	win.loadFile("communicator.html");
+	xD.close();
+};
 </script>
 <script src="connect.js"></script>
 

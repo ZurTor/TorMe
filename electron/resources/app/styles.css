@@ -131,16 +131,6 @@ button:focus{
   transition-duration: 0.3s;
 }
 
-.send_div {
-	background-color: #FFFFFF;
-	width: 80%;
-	height: 61px;
-	max-height: 200px;
-	resize: vertical;
-	position: fixed;
-	bottom: 0;
-	right: 0;
-}
 .msg1_div_1 {
 	float: left;
 	width: 100%;
@@ -247,28 +237,54 @@ button:focus{
   100% { transform: rotate(360deg); }
 }
 
-#chat {
+.chat {
+	display: none;
 	background-color:#333A41;
-	position: fixed;
-	top: 0;
-	width: 80%;
-	height: calc(100% - 63px);
-	right: 0;
 	overflow-y: scroll;
 }
 
-#chat::-webkit-scrollbar-thumb {
+.chat::-webkit-scrollbar-thumb {
 	background: #333A41;
 }
 
-#chat::-webkit-scrollbar-track {
+.chat::-webkit-scrollbar-track {
 	background: #333A41;
 }
 
-#chat:hover::-webkit-scrollbar-thumb {
+.chat:hover::-webkit-scrollbar-thumb {
 	background: #272E35;
 }
 
+#send_div {
+	display: none;
+	background-color: #FFFFFF;
+	width: 80%;
+	height: 61px;
+	max-height: 200px;
+	resize: vertical;
+	position: fixed;
+	bottom: 0;
+	right: 0;
+}
+
+#nameTag {
+	position: fixed;
+	width: 80%;
+	left: 20%;
+	height: 50px;
+	background-color: #272E35;
+	font-size: 25px;
+	padding-top: 15px;
+	text-align: center;
+}
+
+#chatBox {
+	position: fixed;
+	top: 50px;
+	width: 80%;
+	height: calc(100% - 113px);
+	right: 0;
+}
 
 #message {
 	background-color: #DCDCDC;
@@ -330,7 +346,7 @@ button:focus{
 #profile {
 	position: fixed;
 	bottom: 32px;
-	width: 100%;
+	width: 20%;
 	height: 30px;
 	background-color: #272E35;
 }
@@ -338,7 +354,7 @@ button:focus{
 #settings {
 	position: fixed;
 	bottom: 0;
-	width: 100%;
+	width: 20%;
 	height: 31px;
 	background-color: #272E35;
 }
