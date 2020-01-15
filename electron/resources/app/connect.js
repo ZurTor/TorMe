@@ -78,12 +78,16 @@ async function checkMsg() {
     if (err) throw err;
   });
 }
-async function sendMsg(data) {
+async function sendMsg() {
   const {PythonShell} = require('python-shell')
   let options = {
   pythonPath: 'pyloc/python.exe'
   };
   let pyshell = new PythonShell('resources/app/connect.py', options);
+  var data = "";
+  for (var i = 0; i < arguments.length; i++){
+    data += arguments[i];
+  }
   pyshell.send("sendMsg" + ' ' + data);
   pyshell.on('message', function (message) {
     console.log(message);
