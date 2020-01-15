@@ -1,4 +1,9 @@
-import connect
+import sys
+import os
+path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')+r"\app")
+if not path in sys.path:
+    sys.path.insert(1, path)
+del path
 import socket
 import socks
 import pickle
@@ -8,9 +13,7 @@ import time
 from threading import Thread
 from Cryptodome.Hash import keccak
 import threading
-import sys
 import random
-
 args = input().split(' ')
 if not args[0]:
     pass
@@ -24,14 +27,14 @@ else:
     key_active = False
     cipher.genkey()
 
-    print("przed conn")
+    
     soc.connect(("qnvzyabvnrx5twf7rpbbhklmlgvn2rdq3hkvpgnq5rik3gnvalybl6ad.onion", port))
 
     def ret_func():
         return True
     #soc.sendall(pickle.dumps({"type":"connid", "id":hashSHA(args[0]+"nuggets")}))
 
-    print("if")
+
     if args[0] == "login":
         login = {"type":"login", "username": args[1], "password": args[2]}
         #login.insert(0,"login")
@@ -51,9 +54,9 @@ else:
             data += packet
             if packet[-2] == 0 and packet[-1] == 46: break
         if cipher.decode_priv(pickle.loads(data)).decode().split(':')[0] == "token":
-            print("token")
             with open("resources/app/temp/token", "w") as f:
                 f.write(cipher.decode_priv(pickle.loads(data)).decode())
+            print("token")
     if args[0] == "register":
         register = {"type" : "register", "username" : args[1], "password" : args[2]}
         #login.insert(0,"login")
@@ -83,7 +86,7 @@ else:
     if args[0] == "getMsg":
         f = open("resources/app/temp/token", "r")
         token = f.read()
-        user = open("/resources/app/user", "r").read()
+        user = open("resources/app/temp/user", "r").read()
         sendMsg = {"type" : "getMsg", "token" : token, "username" : user}
         jsonlog = json.dumps(sendMsg)
         msg_bytes = cipher.server_crypt(jsonlog)
@@ -93,16 +96,18 @@ else:
         data = b''
         while True:
             packet = soc.recv(16)
-            print(packet)
+
             data += packet
-            if packet[-2] == 0 and packet[-1] == 46: break
+            if (data[-3] == 88 and data[-2] == 68 and data[-1] == 68): break
+        data = data[:-3:]
         backlist = pickle.loads(data)
-        backlist = cipher.decode_priv(backlist)
+
         inString = ""
-        for i in range(len(backlist), 2):
+        for i in range(0, len(backlist), 2):
             who = backlist[i]
-            inString += backlist[i+1]
-        print(inString)
+            inString += cipher.decode_priv(backlist[i+1]).decode()
+            inString += "\n"
+        print(inString[:-1:])
     if args[0] == "getPubkey":
         getKey = {"type" : "getKey", "username" : args[1]}
         jsonlog = json.dumps(getKey)
