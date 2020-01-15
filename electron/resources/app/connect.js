@@ -3,7 +3,10 @@ const path = require('path')
 
 async function openTor() {
   const {PythonShell} = require('python-shell')
-  let pyshell = new PythonShell('resources/app/tor.py');
+  let options = {
+  pythonPath: 'pyloc/python.exe'
+  };
+  let pyshell = new PythonShell('resources/app/tor.py', options);
   pyshell.on('message', function (message) {
     console.log(message);
 
@@ -15,7 +18,10 @@ async function openTor() {
 
 function logSend() {
   const {PythonShell} = require('python-shell')
-  let pyshell = new PythonShell('resources/app/connect.py');
+  let options = {
+  pythonPath: 'pyloc/python.exe'
+  };
+  let pyshell = new PythonShell('resources/app/connect.py', options);
   pyshell.send("login" + ' ' + arguments[0] + ' ' + arguments[1] + '');
   pyshell.on('message', function (message) {
     console.log(message);
@@ -45,7 +51,10 @@ function logSend() {
 }
 function regSend() {
   const {PythonShell} = require('python-shell')
-  let pyshell = new PythonShell('resources/app/connect.py');
+  let options = {
+  pythonPath: 'pyloc/python.exe'
+  };
+  let pyshell = new PythonShell('resources/app/connect.py', options);
   pyshell.send("register" + ' ' + arguments[0] + ' ' + arguments[1] + '');
   pyshell.on('message', function (message) {
     console.log(message);
@@ -57,7 +66,10 @@ function regSend() {
 }
 async function checkMsg() {
   const {PythonShell} = require('python-shell')
-  let pyshell = new PythonShell('resources/app/connect.py');
+  let options = {
+  pythonPath: 'pyloc/python.exe'
+  };
+  let pyshell = new PythonShell('resources/app/connect.py', options);
   pyshell.send("checkmsg" + ' ' + arguments[0] + ' ' + arguments[1] + '');
   pyshell.on('message', function (message) {
     console.log(message);
@@ -66,10 +78,13 @@ async function checkMsg() {
     if (err) throw err;
   });
 }
-async function sendMsg() {
+async function sendMsg(data) {
   const {PythonShell} = require('python-shell')
-  let pyshell = new PythonShell('resources/app/connect.py');
-  pyshell.send("sendMsg" + ' ' + arguments[0] + ' ' + arguments[1] + '');
+  let options = {
+  pythonPath: 'pyloc/python.exe'
+  };
+  let pyshell = new PythonShell('resources/app/connect.py', options);
+  pyshell.send("sendMsg" + ' ' + data);
   pyshell.on('message', function (message) {
     console.log(message);
   });
@@ -77,20 +92,33 @@ async function sendMsg() {
     if (err) throw err;
   });
 }
-async function getMsg() {
+async function getMsg(callback) {
+  var data;
   const {PythonShell} = require('python-shell')
-  let pyshell = new PythonShell('resources/app/connect.py');
+  let options = {
+  pythonPath: 'pyloc/python.exe'
+  };
+  let pyshell = new PythonShell('resources/app/connect.py', options);
   pyshell.send("getMsg");
   pyshell.on('message', function (message) {
-    return message;
+    console.log(message);
+    if (message!=""){
+      callback(message);
+    }
+
   });
   pyshell.end(function (err,code,signal) {
     if (err) throw err;
   });
+
+
 }
 async function getPubkey() {
   const {PythonShell} = require('python-shell')
-  let pyshell = new PythonShell('resources/app/connect.py');
+  let options = {
+  pythonPath: 'pyloc/python.exe'
+  };
+  let pyshell = new PythonShell('resources/app/connect.py', options);
   pyshell.send("getPubkey" + ' ' + arguments[0] + '');
   pyshell.on('message', function (message) {
     console.log(message);

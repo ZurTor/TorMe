@@ -271,7 +271,7 @@ button:focus{
 
 
 #message {
-	background-color: #EAEBEC;
+	background-color: #DCDCDC;
 	color: #F8F9FA0;
 	padding: 1px 10px;
 	width: calc(80% - 15px);
@@ -427,9 +427,9 @@ button:focus{
 }
 
 #logo {
-	width: calc(100% - 20px);
-	margin-left: 10px;
-	margin-right: 10px;
+	width: calc(100% - 100px);
+	margin-left: 50px;
+	margin-right: 50px;
 }
 
 /* width */
@@ -444,4 +444,40 @@ button:focus{
 /* Handle on hover */
 ::-webkit-scrollbar-thumb {
  background: #2C333A;
+}
+
+::-webkit-input-placeholder {
+  color: #757575;
+  font-size: 13px;
+}
+::-moz-placeholder {
+  color: #757575;
+  font-size: 13px;
+}
+:-ms-input-placeholder {
+  color: #757575;
+  font-size: 13px;
+}
+::placeholder {
+  color: #757575;
+  font-size: 13px;
+}
+::-webkit-input-placeholder {
+  color: #757575;
+  font-size: 13px;
+  font-family: 'Roboto';
+}
+::-moz-placeholder {
+  color: #757575;
+  font-size: 13px;
+}
+:-ms-input-placeholder {
+  color: #757575;
+  font-size: 13px;
+  font-family: 'Roboto';
+}
+::placeholder {
+  color: #757575;
+  font-size: 13px;
+  font-family: 'Roboto';
 }

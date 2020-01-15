@@ -7,8 +7,7 @@
 	<link rel="stylesheet" href="styles.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
-<body onload="openTor();">
-<body>
+<body onload="onLoad();">
 	<div id = "add_frnd_popup">
 		<input type="text" placeholder="username" class="text" id="add_searchbar">
 		<button id="add_frnd_button">add</button>
@@ -29,12 +28,14 @@
 	</div>
 
 	<div id="chat">
+		<button id="beczka">X          D</button>
 	</div>
 
 	<div class="send_div">
 	<textarea type="text" placeholder="your message" class="text" id="message"></textarea>
 	<button id="sendBtn">Send</button>
 	</div>
+
 	<script>
 	window.addEventListener('click', function(e){
 
@@ -45,14 +46,14 @@
 
 	function addBtn(text) {
 	var element = document.createElement("button");
-	element.innerText = text;
+	element.innerHTML = text;
 	element.className = "contact";
 	element.onclick = function() {
 		getPubkey(text);
 	};
 
-	var contacts = document.getElementById("contacts");
-	contacts.insertBefore(element, contacts.childNodes[contacts.childNodes.length - 2]);
+	var foo = document.getElementById("contacts");
+	foo.appendChild(element);
 	}
 
 	document.getElementById("add_frnd_button").onclick = function() {
@@ -105,7 +106,7 @@
 	div2.appendChild(element);
 	div1.appendChild(div2);
 	chat.appendChild(div1);
-	}
+}
 
 	var input = document.getElementById("message");
 	input.addEventListener("keyup", function(event) {
@@ -134,10 +135,21 @@
 		el.style.cssText = 'height:' + el.scrollHeight + 'px';
 		},0);
 }
-function fetchMsg() {
-  var data = setInterval(getMsg, 5000);
-	addMsg2(data);
+	var myVar = setInterval(fetchMsg, 5000);
+	function fetchMsg() {
+	  getMsg(addMsg2);
+
 }
+
+document.getElementById("beczka").onclick = function(){
+	console.log("click");
+	fetchMsg();
+};
+
+	function onLoad(){
+		openTor();
+		getUser();
+	}
 	function getUser() {
 		var path = require('path');
 		var p = path.join(__dirname,'temp/user');
@@ -148,8 +160,6 @@ function fetchMsg() {
 			document.getElementById("username").innerText = data;
 		});
 	}
-	window.onload = getUser();
-
 	$('button', ".contacts").on('click', function(){
     $('button', ".contacts").not(this).removeClass('selected');
 	if ($(this).hasClass('selected')) { $(this).removeClass('selected')}
