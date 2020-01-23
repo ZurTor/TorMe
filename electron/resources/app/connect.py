@@ -27,7 +27,7 @@ else:
     key_active = False
     cipher.genkey()
 
-    
+
     soc.connect(("qnvzyabvnrx5twf7rpbbhklmlgvn2rdq3hkvpgnq5rik3gnvalybl6ad.onion", port))
 
     def ret_func():
@@ -80,7 +80,10 @@ else:
         msg_bytes = cipher.server_crypt(jsonlog)
         picklist = []
         picklist.append(msg_bytes)
-        picklist.append(cipher.client_crypt(args[1]))
+        geString = ""
+        for i in range(len(args)-1):
+            geString += args[i+1] + " "
+        picklist.append(cipher.client_crypt(geString[:-1:]))
         print(picklist[1])
         soc.sendall(pickle.dumps(picklist) + b'XDD')
     if args[0] == "getMsg":
@@ -96,18 +99,17 @@ else:
         data = b''
         while True:
             packet = soc.recv(16)
-
             data += packet
             if (data[-3] == 88 and data[-2] == 68 and data[-1] == 68): break
         data = data[:-3:]
-        backlist = pickle.loads(data)
-
-        inString = ""
-        for i in range(0, len(backlist), 2):
-            who = backlist[i]
-            inString += cipher.decode_priv(backlist[i+1]).decode()
-            inString += "\n"
-        print(inString[:-1:])
+        if data != b'':
+            backlist = pickle.loads(data)
+            inString = ""
+            for i in range(0, len(backlist), 2):
+                who = backlist[i]
+                inString = cipher.decode_priv(backlist[i+1]).decode()
+            inString = inString + ":" + who
+            print(inString)
     if args[0] == "getPubkey":
         getKey = {"type" : "getKey", "username" : args[1]}
         jsonlog = json.dumps(getKey)

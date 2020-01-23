@@ -114,16 +114,18 @@
 	sendMsg(text)
 	}
 
-	function addMsg2(text) {
+	function addMsg2(text, who) {
 	var div1 = document.createElement("div");
 	div1.className = ("msg2_div_1");
 	var div2 = document.createElement("div");
 	div2.className = ("msg2_div_2");
 	var element = document.createElement("span");
 	var chats = document.getElementsByClassName("chat");
+	console.log("chat"+who);
 	for(var i = 0; i < chats.length; i++) {
-		a = chats[i].style.display;
-		if(a == "block"){
+		a = chats[i].id;
+		console.log(a);
+		if(a == "chat"+who){
 			var chat = chats[i];
 		}
 	}
@@ -168,6 +170,7 @@
 	function onLoad(){
 		openTor();
 		getUser();
+		document.getElementById("send_div").style.display = "none";
 	}
 	function getUser() {
 		var path = require('path');

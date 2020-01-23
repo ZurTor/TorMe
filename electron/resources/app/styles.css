@@ -256,7 +256,6 @@ button:focus{
 }
 
 #send_div {
-	display: none;
 	background-color: #FFFFFF;
 	width: 80%;
 	height: 61px;

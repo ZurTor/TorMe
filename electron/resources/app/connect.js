@@ -78,17 +78,14 @@ async function checkMsg() {
     if (err) throw err;
   });
 }
-async function sendMsg() {
+async function sendMsg(data) {
   const {PythonShell} = require('python-shell')
   let options = {
   pythonPath: 'pyloc/python.exe'
   };
   let pyshell = new PythonShell('resources/app/connect.py', options);
-  var data = "";
-  for (var i = 0; i < arguments.length; i++){
-    data += arguments[i];
-  }
   pyshell.send("sendMsg" + ' ' + data);
+  console.log(typeof(data));
   pyshell.on('message', function (message) {
     console.log(message);
   });
@@ -104,12 +101,15 @@ async function getMsg(callback) {
   };
   let pyshell = new PythonShell('resources/app/connect.py', options);
   pyshell.send("getMsg");
+  var count = 0;
+  var who = "";
+  var message = "";
   pyshell.on('message', function (message) {
     console.log(message);
-    if (message!=""){
-      callback(message);
-    }
-
+    message = message.split(":");
+    console.log(message[0]);
+    console.log(message[1]);
+    callback(message[0], message[1]);
   });
   pyshell.end(function (err,code,signal) {
     if (err) throw err;
