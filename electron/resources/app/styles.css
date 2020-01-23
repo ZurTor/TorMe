@@ -238,6 +238,11 @@ button:focus{
 }
 
 .chat {
+	position: fixed;
+	top: 50px;
+	width: 80%;
+	height: calc(100% - 113px);
+	right: 0;
 	display: none;
 	background-color:#333A41;
 	overflow-y: scroll;

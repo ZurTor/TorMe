@@ -19,7 +19,7 @@
 	<div class="contacts" id="contacts">
 		<div id = "add_frnd" onclick="document.getElementById('add_frnd_popup').style.display='block'"><img src="pics/Slimboi.png"></div>
 	</div>
-
+	<button onclick="fetchMsg()"></button>
 	<div id="profile">
 		<span id="username"></span>
 	</div>
@@ -129,16 +129,22 @@
 			var chat = chats[i];
 		}
 	}
-	element.innerHTML = text;
-	element.className = ("msg2");
-	if (chat.lastChild) {
-	if (chat.lastChild.className === "msg2_div_1" || chat.lastChild.className === "msg2_div_1 connectUp") {
-		element.classList.add("connectUp2");
-		chat.lastChild.lastChild.lastChild.classList.add("connectDown2");
-	}}
-	div2.appendChild(element);
-	div1.appendChild(div2);
-	chat.appendChild(div1);
+	if(!chat){
+		addBtn(who);
+		addMsg2(text, who);
+	}
+	else{
+		element.innerHTML = text;
+		element.className = ("msg2");
+		if (chat.lastChild) {
+		if (chat.lastChild.className === "msg2_div_1" || chat.lastChild.className === "msg2_div_1 connectUp") {
+			element.classList.add("connectUp2");
+			chat.lastChild.lastChild.lastChild.classList.add("connectDown2");
+		}}
+		div2.appendChild(element);
+		div1.appendChild(div2);
+		chat.appendChild(div1);
+	}
 }
 
 	var input = document.getElementById("message");
@@ -161,7 +167,7 @@
 		el.style.cssText = 'height:' + el.scrollHeight + 'px';
 		},0);
 }
-	var myVar = setInterval(fetchMsg, 5000);
+	//var myVar = setInterval(fetchMsg, 5000);
 	function fetchMsg() {
 	  getMsg(addMsg2);
 

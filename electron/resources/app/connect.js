@@ -1,6 +1,6 @@
 const remote = require('electron').remote;
 const path = require('path')
-
+var pickle = require('pickle');
 async function openTor() {
   const {PythonShell} = require('python-shell')
   let options = {
@@ -84,8 +84,9 @@ async function sendMsg(data) {
   pythonPath: 'pyloc/python.exe'
   };
   let pyshell = new PythonShell('resources/app/connect.py', options);
-  pyshell.send("sendMsg" + ' ' + data);
-  console.log(typeof(data));
+  data = {"0":"sendMsg", "1":data};
+  pyshell.send(JSON.stringify(data), { mode: 'json '});
+  console.log(data);
   pyshell.on('message', function (message) {
     console.log(message);
   });

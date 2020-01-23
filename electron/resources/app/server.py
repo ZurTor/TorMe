@@ -60,7 +60,6 @@ def addMsg(jsonLog, message):
     token = cursor.fetchone()
     cursor.execute("SELECT data from userdata WHERE username = %(username)s", {'username': jsonLog["destUser"]})
     data = cursor.fetchone()
-    print(token[0], "\n", hashSHA(jsonLog["token"]))
     if token[0].decode() == hashSHA(jsonLog["token"]):
         try:
             picklist = pickle.loads(data[0])
@@ -90,7 +89,7 @@ def getMsg(jsonLog, conn):
         conn.sendall(data + b'XDD')
         cursor.execute('''UPDATE userdata SET data = "" WHERE token = %(token)s''', {'token' : hashSHA(jsonLog["token"])})
         database.commit()
-
+    conn.close()
 
 def hashSHA(mess):
     keccak_hash = keccak.new(digest_bits=512)
