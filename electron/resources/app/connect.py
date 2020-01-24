@@ -117,7 +117,7 @@ else:
             for i in range(0, len(backlist), 2):
                 who = backlist[i]
                 inString = cipher.decode_priv(backlist[i+1]).decode()
-                print(inString + ":" + who)
+                print(json.dumps({"msg":inString, "user":who}, ensure_ascii=False))
         soc.close()
     if args[0] == "getPubkey":
         getKey = {"type" : "getKey", "username" : args[1]}

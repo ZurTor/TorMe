@@ -107,16 +107,16 @@ async function getMsg(callback) {
   var message = "";
   pyshell.on('message', function (message) {
     console.log(message);
-    message = message.split(":");
-    console.log(message[0]);
-    console.log(message[1]);
-    callback(message[0], message[1]);
+    if (/^[\],:{}\s]*$/.test(message.replace(/\\["\\\/bfnrtu]/g, '@').
+replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
+replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
+message = JSON.parse(message);
+    callback(message.msg, message.user);
+}
   });
   pyshell.end(function (err,code,signal) {
     if (err) throw err;
   });
-
-
 }
 async function getPubkey() {
   const {PythonShell} = require('python-shell')
