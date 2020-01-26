@@ -8,6 +8,12 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
 <body onload="onLoad();">
+	<div id = "settings_div">
+		<img id="back" src="pics/punktx.png" onclick="document.getElementById('settings_div').style.display = 'none'">
+		<div id="settings_sidebar">
+			<button class = "settings_button">General</button>
+		</div>
+	</div>
 	<div id = "add_frnd_popup">
 		<input type="text" placeholder="username" class="text" id="add_searchbar">
 		<button id="add_frnd_button">add</button>
@@ -23,7 +29,8 @@
 		<span id="username"></span>
 	</div>
 	<div id="settings">
-		<a href="settings.html"><img id="hentaispinner" src="pics/hentaispinner.png"></a>
+		<span id="err_hndlr"></span>
+		<img id="hentaispinner" src="pics/hentaispinner.png" onclick="document.getElementById('settings_div').style.display = 'block'">
 	</div>
 
 	<div id = "nameTag"></div>
@@ -34,6 +41,13 @@
 	</div>
 
 	<script>
+	const Scrollbar = require('smooth-scrollbar');
+	Scrollbar.initAll();
+
+	function error(code){
+		document.getElementById("err_hndlr").innerText = code.toString().split(":")[2];
+	}
+
 	window.addEventListener('click', function(e){
 
   	if (!document.getElementById('add_frnd_popup').contains(e.target) && !document.getElementById('add_frnd').contains(e.target)){
@@ -43,24 +57,31 @@
 
 	function addBtn(text) {
 	var element = document.createElement("button");
-	element.innerHTML = text;
+	element.innerText = text;
 	element.className = "contact";
 	element.onclick = function() {
 		document.getElementById("send_div").style.display = "block";
-		getPubkey(text);
+		getPubkey(text, error);
 		var divsToHide = document.getElementsByClassName("chat");
 		for(var i = 0; i < divsToHide.length; i++){
         divsToHide[i].style.display = "none";
     }
 		document.getElementById("chat" + this.innerText).style.display = "block";
 		document.getElementById("nameTag").innerText = this.innerText;
+		var contactsToHide = document.getElementsByClassName("contact");
+		for(var i = 0; i < contactsToHide.length; i++){
+        contactsToHide[i].classList.remove("selected");
+    }
+		this.classList.add("selected");
 	};
 	var chat = document.createElement("div");
 	chat.setAttribute("id", "chat" + text);
 	chat.className = ("chat");
 
+	var contacts = document.getElementById("contacts");
+	contacts.insertBefore(element, contacts.childNodes[contacts.childNodes.length - 2]);
+
 	document.getElementById("chatBox").appendChild(chat);
-	document.getElementById("contacts").appendChild(element);
 	}
 
 	document.getElementById("add_frnd_button").onclick = function() {
@@ -75,13 +96,14 @@
 		if (!exist){
 		addBtn(name);
 		}
+		document.getElementById("add_frnd_popup").style.display = "none";
 	};
 
 	document.getElementById("sendBtn").onclick = function() {
 		if (/\S/.test(document.getElementById("message").value)){
 			addMsg(document.getElementById("message").value);
 			document.getElementById("message").style.height = "46px";
-			document.querySelector(".send_div").style.height = "61px";
+			document.getElementById("send_div").style.height = "61px";
 			document.getElementById("chat" + document.getElementById("nameTag").innerText).scrollTo(0,document.getElementById("chat" + document.getElementById("nameTag").innerText).scrollHeight);
 			document.getElementById("message").value = "";
 		}
@@ -110,7 +132,7 @@
 	div2.appendChild(element);
 	div1.appendChild(div2);
 	chat.appendChild(div1);
-	sendMsg(text)
+	sendMsg(text, error)
 	}
 
 	function addMsg2(text, who) {
@@ -153,6 +175,25 @@
 	  }
 	});
 
+	var add = document.getElementById("add_searchbar");
+	add.addEventListener("keyup", function(event) {
+	if(event.keyCode == 13 && !event.shiftKey){
+		document.getElementById("add_frnd_button").click();
+	  }
+	});
+
+	var searchbar = document.getElementById("searchbar");
+	searchbar.addEventListener("keyup", function(event) {
+		var contactsToHide = document.getElementsByClassName("contact");
+		for(var i = 0; i < contactsToHide.length; i++){
+			if(contactsToHide[i].innerText.toLowerCase().includes(searchbar.value.toLowerCase())){
+        contactsToHide[i].style.display = "block";
+			}else{
+				contactsToHide[i].style.display = "none";
+			}
+    }
+	});
+
 	var textarea = document.querySelector('textarea');
 	var send_div = document.querySelector('#send_div');
 
@@ -166,9 +207,9 @@
 		el.style.cssText = 'height:' + el.scrollHeight + 'px';
 		},0);
 }
-	//var myVar = setInterval(fetchMsg, 5000);
+	var myVar = setInterval(fetchMsg, 5000);
 	function fetchMsg() {
-	  getMsg(addMsg2);
+	  getMsg(addMsg2, error);
 
 }
 

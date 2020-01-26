@@ -15,6 +15,10 @@ from Cryptodome.Hash import keccak
 import threading
 import random
 
+class Error(Exception):
+    def __init__(self, message):
+        self.message = message
+
 def is_json(myjson):
     try:
         json_object = json.loads(myjson)
@@ -41,8 +45,10 @@ else:
     key_active = False
     cipher.genkey()
 
-    soc.connect(("qnvzyabvnrx5twf7rpbbhklmlgvn2rdq3hkvpgnq5rik3gnvalybl6ad.onion", port))
-
+    try:
+        soc.connect(("qnvzyabvnrx5twf7rpbbhklmlgvn2rdq3hkvpgnq5rik3gnvalybl6ad.onion", port))
+    except:
+        raise Error("Server offline!")
 
     #soc.sendall(pickle.dumps({"type":"connid", "id":hashSHA(args[0]+"nuggets")}))
 
@@ -89,7 +95,7 @@ else:
             user = open("resources/app/temp/user", "r").read()
             sendMsg = {"type" : "sendMsg", "destUser" : curruser, "token" : token, "mainUser" : user}
             jsonlog = json.dumps(sendMsg)
-            msg_bytes = cipher.server_crypt(jsonlog)
+            msg_bytes = cipher.server_crypt(jsonlog, user)
             picklist = []
             picklist.append(msg_bytes)
             picklist.append(cipher.client_crypt(json.loads(args)["1"]))
@@ -111,7 +117,10 @@ else:
             if (data[-3] == 88 and data[-2] == 68 and data[-1] == 68): break
         data = data[:-3:]
         if data != b'':
-            backlist = pickle.loads(data)
+            try:
+                backlist = pickle.loads(data)
+            except:
+                raise Error("Unstable connection!")
             inString = ""
             print(backlist)
             for i in range(0, len(backlist), 2):
@@ -120,20 +129,35 @@ else:
                 print(json.dumps({"msg":inString, "user":who}, ensure_ascii=False))
         soc.close()
     if args[0] == "getPubkey":
-        getKey = {"type" : "getKey", "username" : args[1]}
-        jsonlog = json.dumps(getKey)
-        key_bytes = cipher.server_crypt(jsonlog)
-        picklist = []
-        picklist.append(key_bytes)
-        soc.sendall(pickle.dumps(picklist) + b'XDD')
         data = b''
-        while True:
-            packet = soc.recv(16)
-            print(packet)
-            data += packet
-            if packet[-2] == 0 and packet[-1] == 46: break
-        with open("resources/app/temp/pubkeys", "w") as f:
-            f.write(pickle.loads(data).decode().replace('\\n', '\n')[2:-1:])
+        with open("resources/app/temp/pubkeys", "wb+") as f:
+            try:
+                if not any(args[1] in s for s in pickle.loads(f.load())):
+                    print("XD")
+                    getKey = {"type" : "getKey", "username" : args[1]}
+                    jsonlog = json.dumps(getKey)
+                    key_bytes = cipher.server_crypt(jsonlog)
+                    picklist = []
+                    picklist.append(key_bytes)
+                    soc.sendall(pickle.dumps(picklist) + b'XDD')
+                    while True:
+                        packet = soc.recv(16)
+                        print(packet)
+                        data += packet
+                        try:
+                            if packet[-2] == 0 and packet[-1] == 46: break
+                        except:
+                            raise Error("Unstable connection!")
+                    try:
+                        publist = pickle.loads(f.load())
+                        publist.append(args[1] + "::" + pickle.loads(data).decode().replace('\\n', '\n')[2:-1:])
+                    except:
+                        publist = []
+                        publist.append(args[1] + "::" + pickle.loads(data).decode().replace('\\n', '\n')[2:-1:])
+                    f.write(pickle.dumps(publist))
+            except:
+                pass
+
         with open("resources/app/temp/curruser", "w") as f:
             f.write(args[1])
     #try:

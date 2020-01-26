@@ -12,8 +12,8 @@ from Cryptodome.Hash import keccak
 from threading import Thread
 database = mysql.connector.connect(
   host="localhost",
-  user="root",
-  passwd="7tokyonut++", #6nutgirls
+  user="tokyo",
+  passwd="6nutgirls",
   database="login"
 )
 cursor = database.cursor()
@@ -40,7 +40,7 @@ def login(jsonLog, conn, pubkey):
     cursor.execute("SELECT * from userdata WHERE username = %(username)s", {'username': jsonLog["username"]})
     rows = cursor.fetchone()
     if rows == None:
-        print("u don't exist bro")
+        conn.sendall(pickle.dumps("noacc"))
     #database.commit()
     elif rows[2].decode() == pubkey["pubkey"]:
         if hashSHA(jsonLog["password"]) == rows[1].decode():
@@ -51,8 +51,8 @@ def login(jsonLog, conn, pubkey):
             cursor.execute("UPDATE userdata SET token = %s WHERE username = %s", (hashSHA(token), jsonLog["username"]))
             database.commit()
         else:
-            print("bad pass :(")
-            conn.sendall(pickle.dumps("bad pass bro"))
+            print("bpass")
+            conn.sendall(pickle.dumps("bpass"))
     else:
         conn.sendall(pickle.dumps("Wrong key!"))
 def addMsg(jsonLog, message):
@@ -76,12 +76,18 @@ def addMsg(jsonLog, message):
 def getMsg(jsonLog, conn):
     print("pierwszy mysql")
     print(jsonLog["username"])
-    cursor.execute('''SELECT username from userdata WHERE username = %(username)s''', {'username' : jsonLog["username"]})
+    try:
+        cursor.execute('''SELECT username from userdata WHERE username = %(username)s''', {'username' : jsonLog["username"]})
+    except:
+        conn.close()
     userBase = cursor.fetchone()
     print(userBase[0])
     if userBase[0].decode() == jsonLog["username"]:
         print("jest")
-        cursor.execute('''SELECT data from userdata WHERE token = %(token)s''', {'token' : hashSHA(jsonLog["token"])})
+        try:
+            cursor.execute('''SELECT data from userdata WHERE token = %(token)s''', {'token' : hashSHA(jsonLog["token"])})
+        except:
+            conn.close()
         print("token")
         data = cursor.fetchone()[0]
         print(data)
@@ -102,12 +108,9 @@ def on_new_client(clientsocket,addr):
         data = b''
         while True:
             packet = clientsocket.recv(16)
-            print(packet)
             data += packet
             if (data[-3] == 88 and data[-2] == 68 and data[-1] == 68): break
-        print("help")
         data = data[:-3:]
-        print(data)
         data_map_list = pickle.loads(data)
         jsonLog = json.loads(crypt.decrypt(data_map_list[0]))
         print(jsonLog)

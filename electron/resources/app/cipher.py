@@ -19,9 +19,9 @@ def server_crypt(message):
         key = RSA.import_key(f.read())
     cipher = PKCS1_OAEP.new(key)
     return cipher.encrypt(str(message).encode())
-def client_crypt(message):
+def client_crypt(message, user):
     with open("resources/app/temp/pubkeys", "r") as f:
-        key = RSA.import_key(f.read())
+        key = RSA.import_key(pickle.loads(f.read())[pickle.loads(f.read()).index(user)].split("::")[1])
     cipher = PKCS1_OAEP.new(key)
     return cipher.encrypt(str(message).encode())
 def decode_priv(message):
@@ -38,6 +38,8 @@ def genkey():
         key = create_key()
         with open("resources/app/privkey.key", "wb") as f:
             f.write(key.export_key("PEM"))
+        with open("resources/app/pubkey.key", "wb") as x:
+            x.write(key.publickey().export_key("PEM"))
     else:
         with open("resources/app/privkey.key", "r") as f:
             key = RSA.import_key(f.read())

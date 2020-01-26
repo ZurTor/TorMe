@@ -1,5 +1,6 @@
 const remote = require('electron').remote;
 const path = require('path')
+
 var pickle = require('pickle');
 async function openTor() {
   const {PythonShell} = require('python-shell')
@@ -8,15 +9,13 @@ async function openTor() {
   };
   let pyshell = new PythonShell('resources/app/tor.py', options);
   pyshell.on('message', function (message) {
-    console.log(message);
-
   });
   pyshell.end(function (err,code,signal) {
     if (err) throw err;
   });
 }
 
-function logSend() {
+function logSend(logarg, passaeg, error) {
   const {PythonShell} = require('python-shell')
   let options = {
   pythonPath: 'pyloc/python.exe'
@@ -24,13 +23,12 @@ function logSend() {
   let pyshell = new PythonShell('resources/app/connect.py', options);
   pyshell.send("login" + ' ' + arguments[0] + ' ' + arguments[1] + '');
   pyshell.on('message', function (message) {
-    console.log(message);
     if (message == "token"){
       var xD = remote.getCurrentWindow();
       const BrowserWindow = remote.BrowserWindow;
       const win = new BrowserWindow({
-        'minWidth': 500,
-        'minHeight': 500,
+        'minWidth': 940,
+        'minHeight': 940,
         height: 1000,
         width: 1000,
         center: true,
@@ -46,10 +44,10 @@ function logSend() {
     }
   });
   pyshell.end(function (err,code,signal) {
-    if (err) throw err;
+    if (err) error(code);
   });
 }
-function regSend() {
+function regSend(error) {
   const {PythonShell} = require('python-shell')
   let options = {
   pythonPath: 'pyloc/python.exe'
@@ -57,28 +55,12 @@ function regSend() {
   let pyshell = new PythonShell('resources/app/connect.py', options);
   pyshell.send("register" + ' ' + arguments[0] + ' ' + arguments[1] + '');
   pyshell.on('message', function (message) {
-    console.log(message);
-
   });
   pyshell.end(function (err,code,signal) {
-    if (err) throw err;
+    if (err) error(code);
   });
 }
-async function checkMsg() {
-  const {PythonShell} = require('python-shell')
-  let options = {
-  pythonPath: 'pyloc/python.exe'
-  };
-  let pyshell = new PythonShell('resources/app/connect.py', options);
-  pyshell.send("checkmsg" + ' ' + arguments[0] + ' ' + arguments[1] + '');
-  pyshell.on('message', function (message) {
-    console.log(message);
-  });
-  pyshell.end(function (err,code,signal) {
-    if (err) throw err;
-  });
-}
-async function sendMsg(data) {
+async function sendMsg(data, error) {
   const {PythonShell} = require('python-shell')
   let options = {
   pythonPath: 'pyloc/python.exe'
@@ -86,15 +68,13 @@ async function sendMsg(data) {
   let pyshell = new PythonShell('resources/app/connect.py', options);
   data = {"0":"sendMsg", "1":data};
   pyshell.send(JSON.stringify(data), { mode: 'json '});
-  console.log(data);
   pyshell.on('message', function (message) {
-    console.log(message);
   });
   pyshell.end(function (err,code,signal) {
-    if (err) throw err;
+    if (err) error(code);
   });
 }
-async function getMsg(callback) {
+async function getMsg(callback, error) {
   var data;
   const {PythonShell} = require('python-shell')
   let options = {
@@ -106,29 +86,30 @@ async function getMsg(callback) {
   var who = "";
   var message = "";
   pyshell.on('message', function (message) {
-    console.log(message);
     if (/^[\],:{}\s]*$/.test(message.replace(/\\["\\\/bfnrtu]/g, '@').
 replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
 replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
 message = JSON.parse(message);
+    error(":::")
     callback(message.msg, message.user);
 }
   });
   pyshell.end(function (err,code,signal) {
-    if (err) throw err;
+    if (err) error(err);
   });
 }
-async function getPubkey() {
+async function getPubkey(text, error) {
   const {PythonShell} = require('python-shell')
   let options = {
   pythonPath: 'pyloc/python.exe'
   };
   let pyshell = new PythonShell('resources/app/connect.py', options);
-  pyshell.send("getPubkey" + ' ' + arguments[0] + '');
+  pyshell.send("getPubkey" + ' ' + text + '');
   pyshell.on('message', function (message) {
-    console.log(message);
+    console.log(message)
+    error(":::")
   });
   pyshell.end(function (err,code,signal) {
-    if (err) throw err;
+    if (err) error(err);
   });
 }

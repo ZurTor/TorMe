@@ -44,19 +44,6 @@
 <div class="form-popup" id="Reg">
 	<div class="left">
 		<div>
-		<label><b>Username</b></label>
-		</div>
-		<div>
-		<input type="text" placeholder="Enter Username" id="usernameReg" class="text">
-		</div>
-		<button id="register" onclick="regme()">Register</button>
-		<p>By creating an account you agree to our <br> <a href="#">Terms & Privacy</a>.</p>
-		<div>
-			<label id=repasserr style="color:#b54747"><b>Passwords must be equal!</b></label>
-		</div>
-	</div>
-	<div class="right">
-		<div>
 		<label><b>Password</b></label>
 		</div>
 		<div>
@@ -70,12 +57,40 @@
 		<input type="password" placeholder="Repeat Password" id="password2Reg" class="text">
 		</div>
 	</div>
+	<div class="right">
+		<div>
+		<label><b>Username</b></label>
+		</div>
+		<div>
+		<input type="text" placeholder="Enter Username" id="usernameReg" class="text">
+		</div>
+		<button id="register" onclick="regme()">Register</button>
+		<p>By creating an account you agree to our <br> <a href="#">Terms & Privacy</a>.</p>
+		<div>
+			<label id=repasserr style="color:#b54747"><b>Passwords must be equal!</b></label>
+		</div>
+	</div>
 </div>
-<div class="loader l1"></div>
-<div class="loader l2"></div>
-<div class="loader l3"></div>
+<div id="shadow"></div>
+<div id="keygen">
+	<span class="comunicate">we're making sure, that you are anonymous</span>
+	<div class="loader l1"></div>
+	<div class="loader l2"></div>
+	<div class="loader l3"></div>
+</div>
+<div id="loggingIn">
+	<span class="comunicate">logging in</span>
+	<div class="loader l1"></div>
+	<div class="loader l2"></div>
+	<div class="loader l3"></div>
+</div>
 <button id = "logmeDebug"></button>
 <script>
+
+function error(code){
+	document.getElementById("disconn").innerText = code.toString().split(":")[2];
+}
+
 function openLog() {
 	if (document.getElementById("Log").style.display == "block") {
 	document.getElementById("Log").style.display = "none";
@@ -124,8 +139,9 @@ function logme() {
 	}
 	else
 	{
-	document.querySelectorAll(".loader").forEach(a=>a.style.display = "inline-block");
-	logSend(logarg, passarg);
+		document.getElementById("shadow").style.display = "block";
+		document.getElementById("loggingIn").style.display = "block";
+		logSend(logarg, passarg, error);
 	}
 }
 function regme() {
@@ -149,8 +165,9 @@ function regme() {
 	}
 	else
 	{
-	document.querySelectorAll(".loader").forEach(a=>a.style.display = "inline-block");
-	regSend(logarg, passarg);
+		document.getElementById("shadow").style.display = "block";
+		document.getElementById("keygen").style.display = "block";
+		regSend(logarg, passarg);
 	}
 }
 
