@@ -15,7 +15,7 @@ async function openTor() {
   });
 }
 
-function logSend(logarg, passaeg, error) {
+function logSend(logarg, passaeg, error, callback) {
   const {PythonShell} = require('python-shell')
   let options = {
   pythonPath: 'pyloc/python.exe'
@@ -23,6 +23,7 @@ function logSend(logarg, passaeg, error) {
   let pyshell = new PythonShell('resources/app/connect.py', options);
   pyshell.send("login" + ' ' + arguments[0] + ' ' + arguments[1] + '');
   pyshell.on('message', function (message) {
+    console.log(message);
     if (message == "token"){
       var xD = remote.getCurrentWindow();
       const BrowserWindow = remote.BrowserWindow;
@@ -42,19 +43,25 @@ function logSend(logarg, passaeg, error) {
       win.loadFile("communicator.html");
       xD.close();
     }
+    else{
+      callback(message);
+    }
   });
   pyshell.end(function (err,code,signal) {
     if (err) error(code);
   });
 }
-function regSend(error) {
+function regSend(username, password, error, callback) {
   const {PythonShell} = require('python-shell')
   let options = {
   pythonPath: 'pyloc/python.exe'
   };
   let pyshell = new PythonShell('resources/app/connect.py', options);
-  pyshell.send("register" + ' ' + arguments[0] + ' ' + arguments[1] + '');
+  pyshell.send("register" + ' ' + username + ' ' + password + '');
   pyshell.on('message', function (message) {
+    if (message == "accex"){
+      callback("accex")
+    }
   });
   pyshell.end(function (err,code,signal) {
     if (err) error(code);

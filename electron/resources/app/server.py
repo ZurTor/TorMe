@@ -23,7 +23,7 @@ port = 1337
 socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, "127.0.0.1", 9050, True)
 def checkMsg():
     pass
-def register(jsonReg, pubkey):
+def register(jsonReg, pubkey, conn):
     print("\nUSERNAME: ", jsonReg["username"])
     cursor.execute("SELECT * from userdata WHERE username = %(username)s", {'username': jsonReg["username"]})
     rows = cursor.fetchone()
@@ -31,7 +31,8 @@ def register(jsonReg, pubkey):
         cursor.execute(sqlReg, (jsonReg["username"], hashSHA(jsonReg["password"]), pubkey["pubkey"]))
         database.commit()
     else:
-        print(rows)
+        conn.sendall(pickle.dumps("accex"))
+
 def sendKey(jsonLog, conn):
     cursor.execute("SELECT pubkey from userdata WHERE username = %(username)s", {'username': jsonLog["username"]})
     rows = cursor.fetchone()
@@ -103,31 +104,28 @@ def hashSHA(mess):
     return keccak_hash.hexdigest()
 
 def on_new_client(clientsocket,addr):
-    try:
-        print('Connected by: ', addr)
-        data = b''
-        while True:
-            packet = clientsocket.recv(16)
-            data += packet
-            if (data[-3] == 88 and data[-2] == 68 and data[-1] == 68): break
-        data = data[:-3:]
-        data_map_list = pickle.loads(data)
-        jsonLog = json.loads(crypt.decrypt(data_map_list[0]))
-        print(jsonLog)
-        if jsonLog["type"] == "login":
-            pubkey = json.loads(data_map_list[1])
-            login(jsonLog, clientsocket, pubkey)
-        if jsonLog["type"] == "register":
-            pubkey = json.loads(data_map_list[1])
-            register(jsonLog, pubkey)
-        if jsonLog["type"] == "getKey":
-            sendKey(jsonLog, clientsocket)
-        if jsonLog["type"] == "sendMsg":
-            addMsg(jsonLog, data_map_list[1])
-        if jsonLog["type"] == "getMsg":
-            getMsg(jsonLog, clientsocket)
-    except:
-        pass
+    print('Connected by: ', addr)
+    data = b''
+    while True:
+        packet = clientsocket.recv(16)
+        data += packet
+        if (data[-3] == 88 and data[-2] == 68 and data[-1] == 68): break
+    data = data[:-3:]
+    data_map_list = pickle.loads(data)
+    jsonLog = json.loads(crypt.decrypt(data_map_list[0]))
+    print(jsonLog)
+    if jsonLog["type"] == "login":
+        pubkey = json.loads(data_map_list[1])
+        login(jsonLog, clientsocket, pubkey)
+    if jsonLog["type"] == "register":
+        pubkey = json.loads(data_map_list[1])
+        register(jsonLog, pubkey, clientsocket)
+    if jsonLog["type"] == "getKey":
+        sendKey(jsonLog, clientsocket)
+    if jsonLog["type"] == "sendMsg":
+        addMsg(jsonLog, data_map_list[1])
+    if jsonLog["type"] == "getMsg":
+        getMsg(jsonLog, clientsocket)
 
 soc = socks.socksocket(socket.AF_INET, socket.SOCK_STREAM)
 soc.bind((host, port))

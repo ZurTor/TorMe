@@ -71,6 +71,7 @@
 		</div>
 	</div>
 </div>
+<label id="server_reply"></label>
 <div id="shadow"></div>
 <div id="keygen">
 	<span class="comunicate">we're making sure, that you are anonymous</span>
@@ -139,9 +140,10 @@ function logme() {
 	}
 	else
 	{
+		document.getElementById("server_reply").innerText = "";
 		document.getElementById("shadow").style.display = "block";
 		document.getElementById("loggingIn").style.display = "block";
-		logSend(logarg, passarg, error);
+		logSend(logarg, passarg, error, logRegret);
 	}
 }
 function regme() {
@@ -165,9 +167,10 @@ function regme() {
 	}
 	else
 	{
+		document.getElementById("server_reply").innerText = "";
 		document.getElementById("shadow").style.display = "block";
 		document.getElementById("keygen").style.display = "block";
-		regSend(logarg, passarg);
+		regSend(logarg, passarg, logRegret);
 	}
 }
 
@@ -225,6 +228,22 @@ document.getElementById("logmeDebug").onclick = function() {
 	win.loadFile("communicator.html");
 	xD.close();
 };
+
+function logRegret(reply){
+	document.getElementById("shadow").style.display = "none";
+	document.getElementById("keygen").style.display = "none";
+	document.getElementById("loggingIn").style.display = "none";
+	var label = document.getElementById("server_reply");
+	if(reply == "noacc"){
+		label.innerText = "This account doesn't exist";
+	}
+	else if (reply == "bpass") {
+		label.innerText = "Wrong password";
+	}
+	else if (reply == "accex") {
+		label.innerText = "This account already exist";
+	}
+}
 </script>
 <script src="connect.js"></script>
 

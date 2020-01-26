@@ -23,13 +23,11 @@ def is_json(myjson):
     try:
         json_object = json.loads(myjson)
     except:
-        print(myjson)
         return False
     return True
 
 
 args = input()
-print(args)
 if not is_json(args):
     args = args.split(' ')
 
@@ -68,13 +66,15 @@ else:
         data = b''
         while True:
             packet = soc.recv(16)
-            print(packet)
             data += packet
             if packet[-2] == 0 and packet[-1] == 46: break
-        if cipher.decode_priv(pickle.loads(data)).decode().split(':')[0] == "token":
-            with open("resources/app/temp/token", "w") as f:
-                f.write(cipher.decode_priv(pickle.loads(data)).decode())
-            print("token")
+        try:
+            if cipher.decode_priv(pickle.loads(data)).decode().split(':')[0] == "token":
+                with open("resources/app/temp/token", "w") as f:
+                    f.write(cipher.decode_priv(pickle.loads(data)).decode())
+                print("token")
+        except:
+            print(pickle.loads(data))
     if args[0] == "register":
         register = {"type" : "register", "username" : args[1], "password" : args[2]}
         #login.insert(0,"login")
@@ -86,6 +86,13 @@ else:
         picklist.append(reg_bytes)
         picklist.append(pubson)
         soc.sendall(pickle.dumps(picklist) + b'XDD')
+        data = b''
+        while True:
+            packet = soc.recv(16)
+            print(packet)
+            data += packet
+            if packet[-2] == 0 and packet[-1] == 46: break
+        print(pickle.loads(data))
     if is_json(args):
         print(json.loads(args)["0"])
         if json.loads(args)["0"] == "sendMsg":
