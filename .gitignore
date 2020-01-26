@@ -2,3 +2,4 @@
 electron/resources/app/temp/
 electron/resources/app/pubkey.key
 *.pyc
+electron/pyloc/
