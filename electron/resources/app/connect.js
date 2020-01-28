@@ -9,6 +9,7 @@ async function openTor() {
   };
   let pyshell = new PythonShell('resources/app/tor.py', options);
   pyshell.on('message', function (message) {
+    console.log(message);
   });
   pyshell.end(function (err,code,signal) {
     if (err) throw err;
@@ -67,15 +68,16 @@ function regSend(username, password, error, callback) {
     if (err) error(code);
   });
 }
-async function sendMsg(data, error) {
+async function sendMsg(data, timestamp, error) {
   const {PythonShell} = require('python-shell')
   let options = {
   pythonPath: 'pyloc/python.exe'
   };
   let pyshell = new PythonShell('resources/app/connect.py', options);
-  data = {"0":"sendMsg", "1":data};
+  data = {"0":"sendMsg", "1":data, "2": timestamp};
   pyshell.send(JSON.stringify(data), { mode: 'json '});
   pyshell.on('message', function (message) {
+    console.log(message);
   });
   pyshell.end(function (err,code,signal) {
     if (err) error(code);
@@ -89,19 +91,17 @@ async function getMsg(callback, error) {
   };
   let pyshell = new PythonShell('resources/app/connect.py', options);
   pyshell.send("getMsg");
-  var count = 0;
-  var who = "";
-  var message = "";
   pyshell.on('message', function (message) {
     if (/^[\],:{}\s]*$/.test(message.replace(/\\["\\\/bfnrtu]/g, '@').
 replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
 replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
 message = JSON.parse(message);
     error(":::")
-    callback(message.msg, message.user);
+    callback(message.msg, message.user, message.time);
 }
   });
   pyshell.end(function (err,code,signal) {
+    console.log(err);
     if (err) error(err);
   });
 }
@@ -117,6 +117,7 @@ async function getPubkey(text, error) {
     error(":::")
   });
   pyshell.end(function (err,code,signal) {
+    console.log(err);
     if (err) error(err);
   });
 }

@@ -3,6 +3,11 @@ import os.path
 from Cryptodome.PublicKey import RSA
 from Cryptodome.Cipher import PKCS1_OAEP
 from Cryptodome import Random
+import pickle
+def index_finder(data, user):
+    for i in range(len(pickle.loads(data))):
+        if any(user in s for s in pickle.loads(data)[i].split("::")):
+            return i
 def create_key():
     rand = Random.new().read
     key = RSA.generate(8196, rand)
@@ -20,8 +25,9 @@ def server_crypt(message):
     cipher = PKCS1_OAEP.new(key)
     return cipher.encrypt(str(message).encode())
 def client_crypt(message, user):
-    with open("resources/app/temp/pubkeys", "r") as f:
-        key = RSA.import_key(pickle.loads(f.read())[pickle.loads(f.read()).index(user)].split("::")[1])
+    with open("resources/app/temp/pubkeys", "rb") as f:
+        data = f.read()
+        key = RSA.import_key(pickle.loads(data)[index_finder(data, user)].split("::")[1])
     cipher = PKCS1_OAEP.new(key)
     return cipher.encrypt(str(message).encode())
 def decode_priv(message):

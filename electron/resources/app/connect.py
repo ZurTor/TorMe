@@ -10,6 +10,7 @@ import pickle
 import cipher
 import json
 import time
+from datetime import datetime
 from threading import Thread
 from Cryptodome.Hash import keccak
 import threading
@@ -94,18 +95,20 @@ else:
             if packet[-2] == 0 and packet[-1] == 46: break
         print(pickle.loads(data))
     if is_json(args):
-        print(json.loads(args)["0"])
+        print(json.loads(args))
         if json.loads(args)["0"] == "sendMsg":
             f = open("resources/app/temp/token", "r")
             token = f.read()
             curruser = open("resources/app/temp/curruser", "r").read()
             user = open("resources/app/temp/user", "r").read()
-            sendMsg = {"type" : "sendMsg", "destUser" : curruser, "token" : token, "mainUser" : user}
+            now = datetime.now()
+            sendMsg = {"type" : "sendMsg", "destUser" : curruser, "token" : token, "mainUser" : user, "time" : json.loads(args)["2"]}
             jsonlog = json.dumps(sendMsg)
-            msg_bytes = cipher.server_crypt(jsonlog, user)
+            msg_bytes = cipher.server_crypt(jsonlog)
             picklist = []
             picklist.append(msg_bytes)
-            picklist.append(cipher.client_crypt(json.loads(args)["1"]))
+            print(curruser)
+            picklist.append(cipher.client_crypt(json.loads(args)["1"], curruser))
             soc.sendall(pickle.dumps(picklist) + b'XDD')
     if args[0] == "getMsg":
         f = open("resources/app/temp/token", "r")
@@ -130,41 +133,47 @@ else:
                 raise Error("Unstable connection!")
             inString = ""
             print(backlist)
-            for i in range(0, len(backlist), 2):
-                who = backlist[i]
-                inString = cipher.decode_priv(backlist[i+1]).decode()
-                print(json.dumps({"msg":inString, "user":who}, ensure_ascii=False))
+            for i in range(0, len(backlist), 3):
+                back_time = backlist[i]
+                who = backlist[i+1]
+                inString = cipher.decode_priv(backlist[i+2]).decode()
+                print(json.dumps({"msg":inString, "user":who, "time":back_time}, ensure_ascii=False))
         soc.close()
     if args[0] == "getPubkey":
         data = b''
-        with open("resources/app/temp/pubkeys", "wb+") as f:
+        f = open("resources/app/temp/pubkeys", "rb+")
+        datafile = f.read() + pickle.dumps(' ')
+        f.close()
+        fw = open("resources/app/temp/pubkeys", "wb")
+        print(args[1])
+        if not any(args[1] in s for s in pickle.loads(datafile)):
+            datafile = datafile[:-1:]
+            getKey = {"type" : "getKey", "username" : args[1]}
+            jsonlog = json.dumps(getKey)
+            key_bytes = cipher.server_crypt(jsonlog)
+            picklist = []
+            picklist.append(key_bytes)
+            soc.sendall(pickle.dumps(picklist) + b'XDD')
+            while True:
+                packet = soc.recv(16)
+                print(packet)
+                data += packet
+                try:
+                    if packet[-2] == 0 and packet[-1] == 46: break
+                except:
+                    raise Error("Unstable connection!")
             try:
-                if not any(args[1] in s for s in pickle.loads(f.load())):
-                    print("XD")
-                    getKey = {"type" : "getKey", "username" : args[1]}
-                    jsonlog = json.dumps(getKey)
-                    key_bytes = cipher.server_crypt(jsonlog)
-                    picklist = []
-                    picklist.append(key_bytes)
-                    soc.sendall(pickle.dumps(picklist) + b'XDD')
-                    while True:
-                        packet = soc.recv(16)
-                        print(packet)
-                        data += packet
-                        try:
-                            if packet[-2] == 0 and packet[-1] == 46: break
-                        except:
-                            raise Error("Unstable connection!")
-                    try:
-                        publist = pickle.loads(f.load())
-                        publist.append(args[1] + "::" + pickle.loads(data).decode().replace('\\n', '\n')[2:-1:])
-                    except:
-                        publist = []
-                        publist.append(args[1] + "::" + pickle.loads(data).decode().replace('\\n', '\n')[2:-1:])
-                    f.write(pickle.dumps(publist))
+                publist = pickle.loads(datafile)
+                publist.append(args[1] + "::" + pickle.loads(data).decode().replace('\\n', '\n')[2:-1:])
             except:
-                pass
-
+                publist = []
+                publist.append(args[1] + "::" + pickle.loads(data).decode().replace('\\n', '\n')[2:-1:])
+            fw.write(pickle.dumps(publist))
+            fw.close()
+        else:
+            fw.write(datafile[:-1:])
+            soc.sendall(cipher.server_crypt(pickle.dumps("nice")+b'XDD'))
+            soc.close()
         with open("resources/app/temp/curruser", "w") as f:
             f.write(args[1])
     #try:

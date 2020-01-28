@@ -29,6 +29,7 @@
 		<span id="username"></span>
 	</div>
 	<div id="settings">
+		<img id = err_tringl src="pics/trojkat.png">
 		<span id="err_hndlr"></span>
 		<img id="hentaispinner" src="pics/hentaispinner.png" onclick="document.getElementById('settings_div').style.display = 'block'">
 	</div>
@@ -44,8 +45,38 @@
 	const Scrollbar = require('smooth-scrollbar');
 	Scrollbar.initAll();
 
+	var toNodeList = function(arrayOfNodes, chat){
+		arrayOfNodes.forEach(function(item){
+			var clone = item.cloneNode(true);
+			clone.timestamp = item.timestamp;
+			chat.appendChild(clone);
+		});
+	};
+
+	var toArray = function(chat){
+		if (chat.hasChildNodes()){
+			var array = [];
+			var children = chat.childNodes;
+			for(var i = 0; i < children.length; i++){
+				var clone = children[i].cloneNode(true);
+    		clone.timestamp = children[i].timestamp;
+				array.push(clone);
+			}
+			return array;
+		}
+		else{
+			return [];
+		}
+	};
+
 	function error(code){
 		document.getElementById("err_hndlr").innerText = code.toString().split(":")[2];
+		if (code.toString().split(":")[2] == ""){
+			document.getElementById("err_tringl").style.display = "none";
+		}
+		else{
+			document.getElementById("err_tringl").style.display = "block";
+		}
 	}
 
 	window.addEventListener('click', function(e){
@@ -90,7 +121,7 @@
 		var exist;
 		for(var i = 0; i < contacts.length; i++){
 				if(name == contacts[i].innerText){
-					exist = True;
+					exist = true;
 				}
 		}
 		if (!exist){
@@ -112,6 +143,8 @@
 	function addMsg(text) {
 	var div1 = document.createElement("div");
 	div1.className = ("msg1_div_1");
+	timestamp = Date.now();
+	div1['timestamp'] = timestamp;
 	var div2 = document.createElement("div");
 	div2.className = ("msg1_div_2");
 	var element = document.createElement("span");
@@ -132,20 +165,19 @@
 	div2.appendChild(element);
 	div1.appendChild(div2);
 	chat.appendChild(div1);
-	sendMsg(text, error)
+	sendMsg(text, timestamp, error)
 	}
 
-	function addMsg2(text, who) {
+	function addMsg2(text, who, timestamp) {
 	var div1 = document.createElement("div");
 	div1.className = ("msg2_div_1");
+	div1['timestamp'] = timestamp;
 	var div2 = document.createElement("div");
 	div2.className = ("msg2_div_2");
 	var element = document.createElement("span");
 	var chats = document.getElementsByClassName("chat");
-	console.log("chat"+who);
 	for(var i = 0; i < chats.length; i++) {
 		a = chats[i].id;
-		console.log(a);
 		if(a == "chat"+who){
 			var chat = chats[i];
 		}
@@ -158,13 +190,19 @@
 		element.innerHTML = text;
 		element.className = ("msg2");
 		if (chat.lastChild) {
-		if (chat.lastChild.className === "msg2_div_1" || chat.lastChild.className === "msg2_div_1 connectUp") {
+		if (chat.lastChild.className === "msg2_div_1") {
 			element.classList.add("connectUp2");
 			chat.lastChild.lastChild.lastChild.classList.add("connectDown2");
 		}}
 		div2.appendChild(element);
 		div1.appendChild(div2);
 		chat.appendChild(div1);
+		var divs = toArray(chat);
+		divs.sort(function(x, y){
+	    return x.timestamp - y.timestamp;
+		});
+		chat.innerHTML = '';
+		toNodeList(divs, chat);
 	}
 }
 

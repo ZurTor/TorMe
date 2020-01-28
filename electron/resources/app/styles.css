@@ -46,6 +46,7 @@ textarea {
 	border: 3px solid white;
 	box-sizing: border-box;
 	background-color: #FFFFFF;
+  font-family: inherit;
 }
 
 textarea:focus {
@@ -456,33 +457,30 @@ button.selected{
 }
 
 #profile {
-	display: table;
 	text-align: center;
 	position: fixed;
 	bottom: 32px;
 	width: 20%;
 	height: 30px;
 	background-color: #272E35;
-}
-
-#username {
-	display: table-cell;
-	vertical-align: middle;
+	line-height: 30px;
 }
 
 #settings {
-	display: table;
 	text-align: center;
 	position: fixed;
 	bottom: 0;
 	width: 20%;
 	height: 31px;
 	background-color: #272E35;
+		line-height: 31px;
 }
 
 #err_hndlr {
 	color: #b54747;
 	display: table-cell;
+  width: calc(100% - 50px);
+  left: 27px;
 	vertical-align: middle;
 }
 
@@ -549,6 +547,14 @@ button.selected{
 	width: 23px;
 	bottom: 4px;
 	cursor: pointer;
+}
+
+#err_tringl {
+  display: none;
+  position: fixed;
+	left: 4px;
+	width: 23px;
+	bottom: 4px;
 }
 
 #back {
