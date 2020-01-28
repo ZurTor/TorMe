@@ -1,4 +1,0 @@
-HiddenServiceDir /home/kuose/hdsrc
-HiddenServicePort 1337 127.0.0.1:1337
-ControlPort 9051
-HTTPTunnelPort 9080
