@@ -52,7 +52,7 @@ function logSend(logarg, passaeg, error, callback) {
     if (err) error(code);
   });
 }
-function regSend(username, password, error, callback) {
+function regSend(username, password, callback) {
   const {PythonShell} = require('python-shell')
   let options = {
   pythonPath: 'pyloc/python.exe'
