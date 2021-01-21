@@ -26,7 +26,7 @@
     "proxysocket": "^1.2.0",
     "python-shell": "^1.0.8",
     "smooth-scrollbar": "^8.5.1",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.0",
     "socks": "^2.3.3"
   }
 }
